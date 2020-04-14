@@ -1,0 +1,58 @@
+
+
+.Calendar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+/*
+.Calendar-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: 
+}*/
+
+.Calendar-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.Calendar-leftArrow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.Calendar-leftArrowSymbol {
+    width: 3em;
+    height: 3em;
+    color: lightgrey;
+}
+
+.Calendar-leftArrowSymbol:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.Calendar-rightArrow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.Calendar-rightArrowSymbol {
+    width: 3em;
+    height: 3em;
+    color: lightgrey;
+}
+
+.Calendar-rightArrowSymbol:hover {
+    cursor: pointer;
+    color: black;
+}

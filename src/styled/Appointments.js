@@ -5,10 +5,13 @@ import Modal from "react-modal";
 
 
 export default function Appointments(props) {
-    const { appointments, date } = props;
+    const { appointments, date, style } = props;
     return (
-        <div className={"Appointments-container"}>
-            <AppointmentDate date={date}></AppointmentDate>
+        <div className={"Appointments-container"} style={style}>
+            <AppointmentDate date={date} style={{
+                marginTop: "1em",
+                marginBottom: "1em",
+            }}></AppointmentDate>
             <AppointmentsBody appointments={appointments}></AppointmentsBody>
             <AddAppointment></AddAppointment>
         </div>
@@ -16,12 +19,12 @@ export default function Appointments(props) {
 }
 
 function AppointmentDate(props) {
-    const { date } = props;
+    const { date, style } = props;
     const dayName = moment(date).format("dddd")
     const formatted = moment(date).format("MMMM Do")
 
     return (
-        <div className={"AppointmentDate-container"}>
+        <div className={"AppointmentDate-container"} style={style}>
             <span className={"AppointmentDate-day"}>{dayName}</span>
             <span className={"AppointmentDate-date"}>{formatted}</span>
         </div>
@@ -29,11 +32,13 @@ function AppointmentDate(props) {
 }
 
 function AppointmentsBody(props) {
-    const { appointments } = props;
+    const { appointments, style } = props;
 
     return (
-        <div className={"AppointmentsBody-container"}>
-            {renderAppointments(appointments)}
+        <div className={"AppointmentsBody-container"} style={style}>
+            <div className={"AppointmentsBody-background"}>
+                {renderAppointments(appointments)}
+            </div>
         </div>
     )
 
@@ -50,11 +55,11 @@ function AppointmentsBody(props) {
 
 function Appointment(props) {
     const [showModal, setShowModal] = React.useState(false);
-    const { appointment } = props;
+    const { appointment, style } = props;
     const {title, date} = props.appointment;
     const time = moment(date).format("h:mm A");
     return (
-        <div className={"Appointment-entry"} >
+        <div className={"Appointment-entry"} style={style} >
             <span className={"Appointment-entryTitle"}>{title}</span>
             <span className={"Appointment-entryTime"}>{time}</span>
             <Modal isOpen={showModal}>
@@ -96,13 +101,13 @@ function AppointmentForm(props) {
 
 function AddAppointment(props) {
     const [showModal, setShowModal] = React.useState(false);
+    const { style } = props;
 
     return (
-        <div className={"AddAppointment-container"}>
-            <div className={"AddAppointment-plus"}>
-                <FiPlus></FiPlus>
+        <div className={"AddAppointment-container"} style={style}>
+            <div className={"AddAppointment-plus"} onClick={() => setShowModal(true)}>
+                <FiPlus className="AddAppointment-plusSymbol"></FiPlus>
             </div>        
-            <button onClick={() => setShowModal(true)}>Open Modal</button>
             <Modal isOpen={showModal}>
                 <AppointmentForm
                 ></AppointmentForm>

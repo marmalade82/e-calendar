@@ -1,0 +1,222 @@
+.Header-container {
+  padding: 1em 1.5em 1em 1.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.Header-title {
+  font-size: 2em;
+  display: flex;
+}
+
+.Header-year {
+  font-size: 1.5em;
+  display: flex;
+}
+
+.Months-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Months-position {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  min-width: 75%;
+}
+
+.Months-title {
+  font-size: 1.5em;
+}
+
+.Months-activeTitle {
+  font-size: 1.7em;
+}
+
+.CalendarBody-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: stretch;
+}
+
+.CalendarBody-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.CalendarBody-dayBox {
+  display: flex;
+  width: 2em;
+  height: 2em;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.CalendarBody-dayBox:hover {
+  cursor: pointer;
+}
+
+.CalendarBody-inactiveDay {
+  color: grey;
+}
+
+.Calendar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+/*
+.Calendar-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: 
+}*/
+.Calendar-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.Calendar-leftArrow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.Calendar-leftArrowSymbol {
+  width: 3em;
+  height: 3em;
+  color: lightgrey;
+}
+
+.Calendar-leftArrowSymbol:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.Calendar-rightArrow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.Calendar-rightArrowSymbol {
+  width: 3em;
+  height: 3em;
+  color: lightgrey;
+}
+
+.Calendar-rightArrowSymbol:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.Appointments-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding-left: 3em;
+  padding-right: 3em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  background-color: lightyellow;
+}
+
+.AppointmentDate-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.AppointmentDate-day {
+  font-size: 2em;
+}
+
+.AppointmentDate-date {
+  font-size: 2em;
+}
+
+.AppointmentsBody-container {
+  padding-left: 4em;
+  border-width: 0;
+  border-left-width: 0.5em;
+  border-color: white;
+  border-style: solid;
+}
+
+.AppointmentsBody-background {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  background-color: rgba(125, 125, 125, 0.2);
+  border-radius: 0.5em;
+}
+
+.Appointment-entry {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1em 2em 1em 2em;
+}
+
+.Appointment-entryTitle {
+  font-size: 1.5em;
+}
+
+.Appointment-entryTime {
+  font-size: 1.5em;
+}
+
+.AddAppointment-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.AddAppointment-plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 1em 1em 1em;
+}
+
+.AddAppointment-plus:hover {
+  cursor: pointer;
+}
+
+.AddAppointment-plusSymbol {
+  color: rgba(200, 200, 200, 0.6);
+  height: 3em;
+  width: 3em;
+}
+
+.AddAppointment-plusSymbol:hover {
+  color: #c8c8c8;
+}
+
+.AddAppointment-plusSymbol:active {
+  color: black;
+}
+
+/*# sourceMappingURL=styles.css.map */

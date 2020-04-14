@@ -8,7 +8,9 @@ export default function Months(props) {
 
     return (
         <div className={"Months-container"}>
-            {renderMonths(monthSet)}
+            <div className={"Months-position"}>
+                {renderMonths(monthSet, currentMonth)}
+            </div>
         </div>
     )
 }
@@ -17,18 +19,18 @@ export default function Months(props) {
 function getMonthSet(current, months) {
     const monthSet = [ current - 1, current, current + 1].map((month) => {
         return (month + 12) % 12;
-    }).map((month) => {
-        return moment().month(month).format("MMM");
-    })
+    });
 
     return monthSet;
 
 }
 
-function renderMonths(monthSet) {
+function renderMonths(monthSet, currentMonth) {
     return monthSet.map((month) => {
+        const className = month === currentMonth ? "Months-activeTitle" : "Months-title";
+        const formatted =  moment().month(month).format("MMM");
         return (
-            <span className="Month-title" key={month}>{month}</span>
+            <span className={className} key={formatted}>{formatted}</span>
         )
     })
 }

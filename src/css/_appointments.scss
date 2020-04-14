@@ -1,0 +1,92 @@
+
+.Appointments-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding-left: 3em;
+    padding-right: 3em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    background-color: lightyellow;
+}
+
+.AppointmentDate-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.AppointmentDate-day {
+    font-size: 2em;
+}
+
+.AppointmentDate-date {
+    font-size: 2em;
+}
+
+.AppointmentsBody-container {
+    padding-left: 4em;
+    border-width: 0;
+    border-left-width: 0.5em;
+    border-color: rgba(255,255,255,1);
+    border-style: solid;
+}
+
+.AppointmentsBody-background {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: rgba(125,125,125,0.2);
+    border-radius: 0.5em;
+}
+
+.Appointment-entry {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1em 2em 1em 2em;
+}
+
+.Appointment-entryTitle {
+    font-size: 1.5em;
+}
+
+.Appointment-entryTime {
+    font-size: 1.5em;
+}
+
+.AddAppointment-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.AddAppointment-plus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 1em 1em 1em;
+}
+
+.AddAppointment-plus:hover {
+    cursor: pointer;
+}
+
+.AddAppointment-plusSymbol {
+    color: rgba(200, 200, 200, 0.6);
+    height: 3em;
+    width: 3em;
+}
+
+.AddAppointment-plusSymbol:hover {
+    color: rgba(200, 200, 200, 1);
+}
+
+.AddAppointment-plusSymbol:active {
+    color: black;
+}

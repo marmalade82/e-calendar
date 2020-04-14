@@ -17,11 +17,18 @@ function renderDayTitles() {
         return moment().day(day).format("ddd");
     })
 
-    return daysOfWeek.map((day, index) => {
+    let renderedDays = daysOfWeek.map((day, index) => {
         return (
-        <span className={"CalendaryBody-dayNumber"} key={index}>{day}</span>
+            <div className={"CalendarBody-dayBox"}>
+                <span className={"CalendarBody-dayNumber"} key={index}>{day}</span>
+            </div>
         )
-    })
+    });
+    return (
+        <div className={"CalendarBody-row"}>
+            {renderedDays}
+        </div>
+    );
 }
 
 
@@ -58,5 +65,20 @@ function renderDays(currentMonth) {
         )
     })
 
-    return R.concat(R.concat(prevMonthDays, thisMonthDays), nextMonthDays);
+    const all = R.concat(R.concat(prevMonthDays, thisMonthDays), nextMonthDays);
+    const wrapped = all.map((span) => {
+        return (
+            <div className={"CalendarBody-dayBox"}>
+                {span}
+            </div>
+        )
+    });
+    
+    return R.splitEvery(7, wrapped).map((wrapper, index) => {
+        return (
+            <div className={"CalendarBody-row"} key={"row-" + index}>
+                {wrapper}
+            </div> 
+        )
+    })
 }

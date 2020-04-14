@@ -12,13 +12,13 @@ export default function Calendar(props) {
             ></Months>
             <div className="Calendar-body">
                 <div className="Calendar-leftArrow">
-                    <FiArrowLeft></FiArrowLeft>
+                    <FiArrowLeft className="Calendar-leftArrowSymbol"></FiArrowLeft>
                 </div>
                 <CalendarBody
                     currentMonth={props.currentMonth}
                 ></CalendarBody>
                 <div className="Calendar-rightArrow">
-                    <FiArrowRight></FiArrowRight>
+                    <FiArrowRight className="Calendar-rightArrowSymbol"></FiArrowRight>
                 </div>
             </div>
         </div>

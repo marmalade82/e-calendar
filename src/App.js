@@ -5,8 +5,10 @@ import Calendar from "./styled/Calendar";
 import Appointments from "./styled/Appointments";
 import Modal from "react-modal";
 import './App.css';
+import './css/styles.css';
 
 Modal.setAppElement("#root");
+
 
 function App() {
   return (
