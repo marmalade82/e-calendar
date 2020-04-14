@@ -219,4 +219,38 @@
   color: black;
 }
 
+.AppointmentForm-container {
+  padding: 2em 4em 2em 4em;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.AppointmentForm-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-bottom: 0.7em;
+}
+
+.AppointmentForm-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.AppointmentForm-label {
+  display: flex;
+  flex: 1;
+  max-width: 10em;
+}
+
+input {
+  display: flex;
+  flex: 1;
+}
+
 /*# sourceMappingURL=styles.css.map */

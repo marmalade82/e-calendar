@@ -4,6 +4,23 @@ import { FiPlus } from "react-icons/fi";
 import Modal from "react-modal";
 
 
+const modalStyles = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
+    content: {
+        padding: "0",
+        top: '300px',
+        left: '300px',
+        right: '300px',
+        bottom: '300px',
+    }
+}
+
 export default function Appointments(props) {
     const { appointments, date, style } = props;
     return (
@@ -62,7 +79,9 @@ function Appointment(props) {
         <div className={"Appointment-entry"} style={style} >
             <span className={"Appointment-entryTitle"}>{title}</span>
             <span className={"Appointment-entryTime"}>{time}</span>
-            <Modal isOpen={showModal}>
+            <Modal isOpen={showModal}
+                style={modalStyles}
+            >
                 <AppointmentForm {...appointment}></AppointmentForm>
                 <button onClick={() => setShowModal(false)}>Close Modal</button>
             </Modal>
@@ -83,19 +102,61 @@ function AppointmentForm(props) {
     const [ _people, setPeople ] = React.useState(people ? people : "");
     const [ _location, setLocation ] = React.useState(location ? location: "");
     const [ _description, setDescription ] = React.useState(description ? description: "");
+
+    const firstCol = {
+        marginRight: "1em",
+    }
     
     return (
-        <React.Fragment>
-            <label>Title</label><input value={_title}></input>
-            <label>Start Date</label><input value={_startDate}></input>
-            <label>End Date</label><input value={_endDate}></input>
-            <label>Begins</label><input value={_begins}></input>
-            <label>Ends</label><input value={_ends}></input>
-            <label>People</label><input value={_people}></input>
-            <label>Location</label><input value={_location}></input>
-            <label>Description</label><input value={_description}></input>
-        </React.Fragment>
+        <div class={"AppointmentForm-container"}>
+            <div class={"AppointmentForm-row"}>
+                <div class={"AppointmentForm-group"}>
+                    <Label>Title</Label><input type={"text"} value={_title}></input>
+                </div>
+            </div>
+            <div class={"AppointmentForm-row"}>
+                <div class={"AppointmentForm-group"} style={firstCol}>
+                    <Label>Start Date</Label><input type={"date"} value={_startDate}></input>
+                </div>
+                <div class={"AppointmentForm-group"}>
+                    <Label>End Date</Label><input type={"date"} value={_endDate}></input>
+                </div>
+            </div>
+            <div class={"AppointmentForm-row"}>
+                <div class={"AppointmentForm-group"} style={firstCol}>
+                    <Label>Begins</Label><input type={"time"} value={_begins}></input>
+                </div>
+                <div class={"AppointmentForm-group"}>
+                    <Label>Ends</Label><input type={"time"} value={_ends}></input>
+                </div>
+            </div>
+            <div class={"AppointmentForm-row"}>
+                <div class={"AppointmentForm-group"}>
+                    <Label>People</Label><input type={"text"} value={_people}></input>
+                </div>
+            </div>
+            <div class={"AppointmentForm-row"}>
+                <div class={"AppointmentForm-group"}>
+                    <Label>Location</Label><input type={"text"} value={_location}></input>
+                </div>
+            </div>
+            <div class={"AppointmentForm-row"}>
+                <div class={"AppointmentForm-group"}>
+                    <Label>Description</Label><input type={"text"} value={_description}></input>
+                </div>
+            </div>
+        </div>
 
+    )
+}
+
+function Label(props) {
+    const { children } = props;
+
+    return (
+        <div className={"AppointmentForm-label"}>
+            <label >{children}</label>
+        </div>
     )
 }
 
@@ -108,7 +169,9 @@ function AddAppointment(props) {
             <div className={"AddAppointment-plus"} onClick={() => setShowModal(true)}>
                 <FiPlus className="AddAppointment-plusSymbol"></FiPlus>
             </div>        
-            <Modal isOpen={showModal}>
+            <Modal isOpen={showModal}
+                style={modalStyles}
+            >
                 <AppointmentForm
                 ></AppointmentForm>
                 <button onClick={() => setShowModal(false)}>Close Modal</button>
