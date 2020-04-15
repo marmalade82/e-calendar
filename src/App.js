@@ -3,6 +3,7 @@ import React from 'react';
 import Header from "./styled/Header";
 import Calendar from "./styled/Calendar";
 import Appointments from "./styled/Appointments";
+import { Application } from "./application/Application";
 import Modal from "react-modal";
 import moment from "moment";
 import './App.css';
@@ -16,6 +17,21 @@ function App() {
 
   const [ calendarDate, setCalendarDate ] = React.useState(today.toDate());
   const [ selectedDay, setSelectedDay ] = React.useState(today.toDate());
+
+  const [ appointments, setAppointments ] = React.useState([]);
+
+  React.useEffect(() => {
+    // On mount, we subscribe to the Application layer's query about ALL appointments.
+    const [code, obs] = Application.do("appointment", "query", {
+      type: "all",
+    })
+
+    if(code === "ok") {
+      obs.subscribe((appts) => {
+        setAppointments(appts)
+      })
+    }
+  }, [])
 
   return (
     <div id={"app"} className="App-container">
@@ -40,10 +56,9 @@ function App() {
 
       <Appointments
         date = {selectedDay}
-        appointments = {[
-          {title: "Hi, goat", date: new Date()},
-          {title: "bye, goat", date: new Date()}
-        ]}
+        appointments = {
+          appointments
+        }
       ></Appointments>
     </div>
   )

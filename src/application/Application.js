@@ -2,6 +2,7 @@
 /*Interface to the application layer*/
 
 import moment from "moment";
+import { Observable } from "rxjs";
 
 var R = require('ramda');
 
@@ -22,7 +23,20 @@ export const Application = {
 
 
 // global store of appointments! May need to replace this later
-const appointments = [];
+const appointments = [
+    {title: "hi", date: moment().toDate()},
+    {title: "bye", date: moment().add(1, "days").toDate() }
+];
+
+const externalHandle = {};
+
+const apptObservable = new Observable((subscribe) => {
+    externalHandle.next = () => {
+        subscribe.next(appointments);
+    }
+    externalHandle.next();
+
+})
 
 
 const Appointment = {
@@ -73,6 +87,9 @@ const Query = {
                         })
                         return ["ok", matches]; //Returns matches. Mutable, unfortunately.
                     }
+                    case "all":
+                        //Returns an array of appointments.
+                        return ["ok", apptObservable];
                     default: return ["error", "Unknown query type: " + data.type];
                 }
             }
