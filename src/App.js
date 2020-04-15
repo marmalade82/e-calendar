@@ -18,19 +18,34 @@ function App() {
   const [ calendarDate, setCalendarDate ] = React.useState(today.toDate());
   const [ selectedDay, setSelectedDay ] = React.useState(today.toDate());
 
+  const [ apptDates, setApptDates ] = React.useState({});
   const [ appointments, setAppointments ] = React.useState([]);
 
   React.useEffect(() => {
     // On mount, we subscribe to the Application layer's query about ALL appointments.
-    const [code, obs] = Application.do("appointment", "query", {
-      type: "all",
-    })
+    (() => {
+        const [code, obs] = Application.do("appointment", "query", {
+          type: "all",
+        })
 
-    if(code === "ok") {
-      obs.subscribe((appts) => {
-        setAppointments(appts)
-      })
-    }
+        if(code === "ok") {
+          obs.subscribe((appts) => {
+            setAppointments(appts)
+          })
+        }
+      })(); 
+
+    (() => {
+        const [code, obs] = Application.do("dates", "query", {
+          type: "has-appointments",
+        })
+
+        if(code === "ok") {
+          obs.subscribe((dates) => {
+            setApptDates(dates);
+          })
+        }
+    })();
   }, [])
 
   return (
@@ -52,6 +67,7 @@ function App() {
             setCalendarDate(date);
           }
         }}
+        apptDates={apptDates}
       ></Calendar>
 
       <Appointments

@@ -3,6 +3,7 @@
 
 import moment from "moment";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 var R = require('ramda');
 
@@ -14,6 +15,8 @@ export const Application = {
         switch (context) {
             case "appointment": 
                 return Appointment.do(action, data);
+            case "dates": 
+                return Dates.do(action, data);
             default: {
                 throw new Error("Unknown context");
             }
@@ -25,7 +28,7 @@ export const Application = {
 // global store of appointments! May need to replace this later
 const appointments = [
     {title: "hi", date: moment().toDate()},
-    {title: "bye", date: moment().add(1, "days").toDate() }
+    {title: "bye", date: moment().add(2, "days").toDate() }
 ];
 
 const externalHandle = {};
@@ -73,6 +76,17 @@ const Appointment = {
     }
 }
 
+const Dates = {
+    do: (action, data) => {
+        switch(action) {
+            case "query": 
+                return Query.do("dates", data)
+            default:
+                return ["error", `'${action}' is not a valid date action`]
+        }
+    }
+}
+
 
 // This would be a really nice place to have a query language interpreter translate the object...
 const Query = {
@@ -90,7 +104,23 @@ const Query = {
                     case "all":
                         //Returns an array of appointments.
                         return ["ok", apptObservable];
-                    default: return ["error", "Unknown query type: " + data.type];
+                    default: return ["error", "Unknown appointment query type: " + data.type];
+                }
+            }
+            case "dates": {
+                switch(data.type) {
+                    case "has-appointments": {
+                        return ["ok", apptObservable.pipe(map((appts) => {
+                            return Object.keys(R.groupBy(day, appts)).map((dateStr) => {
+                                return moment(dateStr).toDate()
+                            }) 
+                        }))]
+
+                        function day(appt) {
+                            return moment(appt.date).startOf("day").toString();
+                        }
+                    }
+                    default: return ["error", "Unknown date query type: " + data.type ]
                 }
             }
             default: {

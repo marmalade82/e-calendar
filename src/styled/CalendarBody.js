@@ -4,11 +4,11 @@ var R = require('ramda');
 
 
 export default function CalendarBody(props) {
-    const { selectedDate, onChangeDate, calendarDate } = props;
+    const { selectedDate, onChangeDate, calendarDate, apptDates } = props;
     return (
         <div className={"CalendarBody-container"}>
             {renderDayTitles()}
-            {renderDays(calendarDate, selectedDate, onChangeDate)}
+            {renderDays(calendarDate, selectedDate, onChangeDate, apptDates)}
         </div>
     )
 }
@@ -33,7 +33,7 @@ function renderDayTitles() {
 }
 
 
-function renderDays(calendarDate, selectedDate, onChangeDate ) {
+function renderDays(calendarDate, selectedDate, onChangeDate, apptDates) {
     // If the date of any of the days matches the selected date, we need to make it look special.
     // Also all of the activeDates can be selected as a new Date.
 
@@ -85,6 +85,7 @@ function renderDays(calendarDate, selectedDate, onChangeDate ) {
                 key={index}
             >
                 {dayObj.component}
+                {ApptIcon(dayObj.date, apptDates)}
             </div>
         )
 
@@ -99,6 +100,18 @@ function renderDays(calendarDate, selectedDate, onChangeDate ) {
             }
 
             return classes.join(' ');
+        }
+
+        function ApptIcon(date, apptDates) {
+            if (R.find(sameDay, apptDates) !== undefined) {
+                return <span>i</span>
+            }
+
+            return null;
+
+            function sameDay(apptDate) {
+                return moment(apptDate).startOf("day").isSame(moment(date).startOf("day"));
+            }
         }
     });
     

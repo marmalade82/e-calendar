@@ -5,7 +5,10 @@ import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 var moment = require("moment");
 
 export default function Calendar(props) {
-    const { onChangeCalendarDate, calendarDate, onChangeDate, selectedDate } = props;
+    const { 
+        onChangeCalendarDate, calendarDate, onChangeDate, selectedDate,
+        apptDates
+    } = props;
 
     return (
         <div className="Calendar-container">
@@ -24,6 +27,7 @@ export default function Calendar(props) {
                     calendarDate={calendarDate}
                     selectedDate={selectedDate}
                     onChangeDate={onChangeDate}
+                    apptDates={apptDates}
 
                 ></CalendarBody>
                 <div className="Calendar-rightArrow" 
