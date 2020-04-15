@@ -4,6 +4,7 @@ import Header from "./styled/Header";
 import Calendar from "./styled/Calendar";
 import Appointments from "./styled/Appointments";
 import Modal from "react-modal";
+import moment from "moment";
 import './App.css';
 import './css/styles.css';
 
@@ -11,19 +12,34 @@ Modal.setAppElement("#root");
 
 
 function App() {
+  const today = moment();
+
+  const [ calendarDate, setCalendarDate ] = React.useState(today.toDate());
+  const [ selectedDay, setSelectedDay ] = React.useState(today.toDate());
+
   return (
     <div id={"app"} className="App-container">
       <Header
         title={"eCalendar"}
-        year={"2021"}
+        year={moment(calendarDate).format("YYYY")}
       ></Header>
 
       <Calendar
-        currentMonth={3}
+        calendarDate={calendarDate}
+        onChangeCalendarDate={(date) => setCalendarDate( date )}
+        selectedDate={selectedDay}
+        onChangeDate={(date) => { 
+          setSelectedDay(date)
+
+          if(moment(date).endOf("month").isBefore(calendarDate) || 
+             moment(date).startOf("month").isAfter(calendarDate)) {
+            setCalendarDate(date);
+          }
+        }}
       ></Calendar>
 
       <Appointments
-        date = {new Date()}
+        date = {selectedDay}
         appointments = {[
           {title: "Hi, goat", date: new Date()},
           {title: "bye, goat", date: new Date()}
@@ -31,25 +47,6 @@ function App() {
       ></Appointments>
     </div>
   )
-  /*
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );*/
 }
 
 export default App;

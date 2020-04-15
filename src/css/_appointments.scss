@@ -92,7 +92,7 @@
 }
 
 .AppointmentForm-container {
-    padding: 2em 4em 2em 4em;
+    padding: 3em 2em 3em 2em;
     background-color: rgb(240, 240, 240);
     display: flex;
     flex-direction: column;
@@ -112,15 +112,21 @@
     flex-direction: row;
     justify-content: flex-start;
     flex: 1;
+    align-items: center;
 }
 
 .AppointmentForm-label {
     display: flex;
     flex: 1;
-    max-width: 10em;
+    max-width: 8em;
 }
 
 input {
     display: flex;
     flex: 1;
+    border-color: rgb(200, 200, 200);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.3em;
+    padding: 0.5em 0.5em 0.5em 0.5em;
 }

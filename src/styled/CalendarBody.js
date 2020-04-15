@@ -4,10 +4,11 @@ var R = require('ramda');
 
 
 export default function CalendarBody(props) {
+    const { selectedDate, onChangeDate, calendarDate } = props;
     return (
         <div className={"CalendarBody-container"}>
             {renderDayTitles()}
-            {renderDays(props.currentMonth)}
+            {renderDays(calendarDate, selectedDate, onChangeDate)}
         </div>
     )
 }
@@ -19,7 +20,7 @@ function renderDayTitles() {
 
     let renderedDays = daysOfWeek.map((day, index) => {
         return (
-            <div className={"CalendarBody-dayBox"}>
+            <div className={"CalendarBody-dayBox"} key={index}>
                 <span className={"CalendarBody-dayNumber"} key={index}>{day}</span>
             </div>
         )
@@ -32,46 +33,73 @@ function renderDayTitles() {
 }
 
 
-function renderDays(currentMonth) {
-    const previousMonth = (currentMonth + 12 - 1) % 12;
-    const daysInPreviousMonth = moment().month(previousMonth).daysInMonth();
+function renderDays(calendarDate, selectedDate, onChangeDate ) {
+    // If the date of any of the days matches the selected date, we need to make it look special.
+    // Also all of the activeDates can be selected as a new Date.
+
+    const previousMonth = moment(calendarDate).subtract(1, "month");
+    const currentMonth = moment(calendarDate);
+    const nextMonth = moment(calendarDate).add(1, "month");
+
     const prevMonthDays = (function(){ 
-        const difference = Math.abs(moment().month(currentMonth).startOf("month").day() - moment().month(currentMonth).startOf("month").startOf("week").day());
+        const daysInPreviousMonth = previousMonth.daysInMonth();
+        const difference = Math.abs(moment(currentMonth).startOf("month").day() - moment(currentMonth).startOf("month").startOf("week").day());
         const days = R.takeLast(difference, R.range(1, daysInPreviousMonth + 1));
         return days;
     })().map((day, index) => {
-        return (
-            <span className={"CalendarBody-inactiveDay"} key={"prev" + index}>{day}</span>
-        )
+        // NEED TO REWORK THIS. YEAR SHOULD CHANGE AS WELL.
+        return {
+            date: makeDate(previousMonth, day),
+            component: ( 
+                <span className={"CalendarBody-inactiveDay"} key={"prev" + index}>{day}</span>
+            )
+        }
+        
     })
 
-    const daysInMonth = moment().month(currentMonth).daysInMonth();
+    const daysInMonth = moment(currentMonth).daysInMonth();
     const thisMonthDays = R.range(1, daysInMonth + 1).map((day, index) => {
-        return (
-            <span className={"CalendarBody-activeDay"} key={"current" + index}>{day}</span>
-        )
+        return {
+          date: makeDate(currentMonth, day),
+          active: true,
+          component: <span className={"CalendarBody-activeDay"} key={"current" + index}>{day}</span>
+        }
     })
 
-
-    const nextMonth = (currentMonth + 12 + 1) % 12;
-    const daysInNextMonth = moment().month(nextMonth).daysInMonth();
     const nextMonthDays = (function() {
-        const difference = Math.abs(moment().month(currentMonth).endOf("month").day() - moment().month(currentMonth).endOf("month").endOf("week").day());
+        const daysInNextMonth = moment(nextMonth).daysInMonth();
+        const difference = Math.abs(moment(currentMonth).endOf("month").day() - moment(currentMonth).endOf("month").endOf("week").day());
         const days = R.take(difference, R.range(1, daysInNextMonth));
         return days;
     })().map((day, index) => {
-        return (
-            <span className={"CalendarBody-inactiveDay"} key={"next" + index}>{day}</span>
-        )
+        return {
+            date: makeDate(nextMonth, day),
+            component: <span className={"CalendarBody-inactiveDay"} key={"next" + index}>{day}</span>
+        }
     })
 
     const all = R.concat(R.concat(prevMonthDays, thisMonthDays), nextMonthDays);
-    const wrapped = all.map((span) => {
+    const wrapped = all.map((dayObj, index) => {
         return (
-            <div className={"CalendarBody-dayBox"}>
-                {span}
+            <div className={classes(dayObj)} onClick={() => onChangeDate(dayObj.date)}
+                key={index}
+            >
+                {dayObj.component}
             </div>
         )
+
+        function classes(dayObj) {
+            let classes = ["CalendarBody-dayBox"];
+            if(moment(dayObj.date).startOf("day").isSame(moment(selectedDate).startOf("day"))) {
+                classes.push("CalendarBody-selectedDay")
+            }
+
+            if(dayObj.active) {
+                classes.push("CalendarBody-activeDayBox")
+            }
+
+            return classes.join(' ');
+        }
     });
     
     return R.splitEvery(7, wrapped).map((wrapper, index) => {
@@ -81,4 +109,8 @@ function renderDays(currentMonth) {
             </div> 
         )
     })
+}
+
+function makeDate(mom, day) {
+    return moment(mom).date(day).toDate();
 }

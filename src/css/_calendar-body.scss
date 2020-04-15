@@ -11,17 +11,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    align-items: stretch;
 }
 
 .CalendarBody-dayBox {
     display: flex;
-    width: 2em;
-    height: 2em;
+    width: 2.3em;
+    height: 2.3em;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 }
 
@@ -29,6 +27,15 @@
     cursor: pointer;
 }
 
+.CalendarBody-activeDayBox:hover {
+    cursor: pointer;
+}
+
 .CalendarBody-inactiveDay {
     color: grey;
+}
+
+.CalendarBody-selectedDay {
+    background-color: lightgrey;
+    border-radius: 50%;
 }

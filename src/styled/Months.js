@@ -3,7 +3,8 @@ var moment = require('moment')
 
 
 export default function Months(props) {
-    const currentMonth = props.current;
+    const currentDate = props.current;
+    const currentMonth = moment(currentDate).month();
     const monthSet = getMonthSet(currentMonth);
 
     return (

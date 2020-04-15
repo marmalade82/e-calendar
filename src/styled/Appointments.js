@@ -16,8 +16,8 @@ const modalStyles = {
         padding: "0",
         top: '300px',
         left: '300px',
-        right: '300px',
-        bottom: '300px',
+        //right: '300px',
+        //bottom: '300px',
     }
 }
 
@@ -75,6 +75,8 @@ function Appointment(props) {
     const { appointment, style } = props;
     const {title, date} = props.appointment;
     const time = moment(date).format("h:mm A");
+
+    let data = {};
     return (
         <div className={"Appointment-entry"} style={style} >
             <span className={"Appointment-entryTitle"}>{title}</span>
@@ -82,16 +84,20 @@ function Appointment(props) {
             <Modal isOpen={showModal}
                 style={modalStyles}
             >
-                <AppointmentForm {...appointment}></AppointmentForm>
-                <button onClick={() => setShowModal(false)}>Close Modal</button>
+                <AppointmentForm {...appointment} data={data}></AppointmentForm>
+                <button onClick={() => setShowModal(false)}>Cancel</button>
+                <button onClick={() => setShowModal(false)}>Save</button>
+                <button onClick={() => setShowModal(false)}>Delete</button>
             </Modal>
         </div>
     )
 }
 
 function AppointmentForm(props) {
+    // Set initial values based on props;
     const {
         title, startDate, endDate, begins, ends, people, location, description,
+        data,
     } = props;
 
     const [ _title, setTitle ] = React.useState(title ? title : "");
@@ -103,6 +109,20 @@ function AppointmentForm(props) {
     const [ _location, setLocation ] = React.useState(location ? location: "");
     const [ _description, setDescription ] = React.useState(description ? description: "");
 
+    // Props allows you to pass in an empty object that will be augmented with a method to get the data.
+    data.get = () => {
+        return {
+            title: _title,
+            startDate: _startDate,
+            endDate: _endDate,
+            begins: _begins,
+            ends: _ends,
+            people: _people,
+            location: _location,
+            description: _description,
+        };
+    }
+
     const firstCol = {
         marginRight: "1em",
     }
@@ -111,43 +131,47 @@ function AppointmentForm(props) {
         <div class={"AppointmentForm-container"}>
             <div class={"AppointmentForm-row"}>
                 <div class={"AppointmentForm-group"}>
-                    <Label>Title</Label><input type={"text"} value={_title}></input>
+                    <Label>Title:</Label><input type={"text"} value={_title} onChange={change(setTitle)}></input>
                 </div>
             </div>
             <div class={"AppointmentForm-row"}>
                 <div class={"AppointmentForm-group"} style={firstCol}>
-                    <Label>Start Date</Label><input type={"date"} value={_startDate}></input>
+                    <Label>Start Date:</Label><input type={"date"} value={_startDate} onChange={change(setStartDate) }></input>
                 </div>
                 <div class={"AppointmentForm-group"}>
-                    <Label>End Date</Label><input type={"date"} value={_endDate}></input>
+                    <Label>End Date:</Label><input type={"date"} value={_endDate} onChange={change(setEndDate)}></input>
                 </div>
             </div>
             <div class={"AppointmentForm-row"}>
                 <div class={"AppointmentForm-group"} style={firstCol}>
-                    <Label>Begins</Label><input type={"time"} value={_begins}></input>
+                    <Label>Begins:</Label><input type={"time"} value={_begins} onChange={change(setBegins)}></input>
                 </div>
                 <div class={"AppointmentForm-group"}>
-                    <Label>Ends</Label><input type={"time"} value={_ends}></input>
-                </div>
-            </div>
-            <div class={"AppointmentForm-row"}>
-                <div class={"AppointmentForm-group"}>
-                    <Label>People</Label><input type={"text"} value={_people}></input>
+                    <Label>Ends:</Label><input type={"time"} value={_ends} onChange={change(setEnds)}></input>
                 </div>
             </div>
             <div class={"AppointmentForm-row"}>
                 <div class={"AppointmentForm-group"}>
-                    <Label>Location</Label><input type={"text"} value={_location}></input>
+                    <Label>People:</Label><input type={"text"} value={_people} onChange={change(setPeople)}></input>
                 </div>
             </div>
             <div class={"AppointmentForm-row"}>
                 <div class={"AppointmentForm-group"}>
-                    <Label>Description</Label><input type={"text"} value={_description}></input>
+                    <Label>Location:</Label><input type={"text"} value={_location} onChange={change(setLocation)}></input>
+                </div>
+            </div>
+            <div class={"AppointmentForm-row"}>
+                <div class={"AppointmentForm-group"}>
+                    <Label>Description:</Label><input type={"text"} value={_description} onChange={change(setDescription)}></input>
                 </div>
             </div>
         </div>
-
     )
+    function change(f) {
+        return (event) => {
+            f(event.target.value);
+        }
+    }
 }
 
 function Label(props) {
@@ -164,6 +188,8 @@ function AddAppointment(props) {
     const [showModal, setShowModal] = React.useState(false);
     const { style } = props;
 
+    let data = {}
+
     return (
         <div className={"AddAppointment-container"} style={style}>
             <div className={"AddAppointment-plus"} onClick={() => setShowModal(true)}>
@@ -172,9 +198,10 @@ function AddAppointment(props) {
             <Modal isOpen={showModal}
                 style={modalStyles}
             >
-                <AppointmentForm
+                <AppointmentForm data={data}
                 ></AppointmentForm>
-                <button onClick={() => setShowModal(false)}>Close Modal</button>
+                <button onClick={() => setShowModal(false)}>Cancel</button>
+                <button onClick={() => setShowModal(false)}>Submit</button>
             </Modal>
 
         </div>
