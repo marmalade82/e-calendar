@@ -24,13 +24,16 @@ const modalStyles = {
 
 export default function Appointments(props) {
     const { appointments, date, style } = props;
+    const filteredAppts = appointments.filter((appt) => {
+        return moment(appt.startDate).startOf("day").isSame(moment(date).startOf("day"));
+    })
     return (
         <div className={"Appointments-container"} style={style}>
             <AppointmentDate date={date} style={{
                 marginTop: "1em",
                 marginBottom: "1em",
             }}></AppointmentDate>
-            <AppointmentsBody appointments={appointments}></AppointmentsBody>
+            <AppointmentsBody appointments={filteredAppts}></AppointmentsBody>
             <AddAppointment></AddAppointment>
         </div>
     )
@@ -50,7 +53,7 @@ function AppointmentDate(props) {
 }
 
 function AppointmentsBody(props) {
-    const { appointments, style } = props;
+    const { appointments, date, style } = props;
 
     return (
         <div className={"AppointmentsBody-container"} style={style}>
@@ -66,7 +69,7 @@ function AppointmentsBody(props) {
             const {title, startDate, begins} = appointment;
             console.log(appointment);
             return (
-                <Appointment appointment={appointment} key={appointment.id ? appointment.id : title + startDate.toString()}></Appointment>
+                <Appointment appointment={appointment} key={appointment.id ? appointment.id : title + startDate.toString() + begins.toString()}></Appointment>
             )
         })
     }
@@ -74,9 +77,10 @@ function AppointmentsBody(props) {
 
 function Appointment(props) {
     const [showModal, setShowModal] = React.useState(false);
+    const [message, setMessage] = React.useState("");
     const { appointment, style } = props;
-    const {title, startDate} = props.appointment;
-    const time = moment(startDate).format("h:mm A");
+    const {title, begins} = props.appointment;
+    const time = moment(begins).format("h:mm A");
 
     let data = {};
 
@@ -96,8 +100,37 @@ function Appointment(props) {
             <Modal isOpen={showModal}
                 style={modalStyles}
             >
+                <div className={"AddAppointment-errorContainer"}>
+                    <span className={"AddAppointment-error"}>{message}</span>
+                </div>
                 <AppointmentForm {...appointment} data={data}></AppointmentForm>
-                <button onClick={closeModal} >Cancel</button>
+                <button onClick={(event) => {
+                    setMessage("");
+                    closeModal(event);
+                }} >Cancel</button>
+                <button onClick={(event) => {
+                    console.log(data.get());
+                    let d = data.get();
+                    d.id = appointment.id;
+                    const [code, result] = Application.do("appointment", "update", d);
+                    if(code === "ok") {
+                        closeModal(event);
+                        setMessage("");
+                    } else {
+                        setMessage(result);
+                    }
+                }} >Save</button>
+                <button onClick={(event) => {
+                    console.log("deleting: ")
+                    console.log(appointment);
+                    const [code, result] = Application.do("appointment", "delete", appointment)
+                    if(code === "ok") {
+                        closeModal(event);
+                        setMessage("");
+                    } else {
+                        setMessage(result);
+                    }
+                }} >Delete</button>
             </Modal>
         </div>
     )
@@ -215,12 +248,14 @@ function AddAppointment(props) {
                 </div>
                 <AppointmentForm data={data}
                 ></AppointmentForm>
-                <button onClick={() => {
+                <button onClick={(event) => {
+                        event.stopPropagation();
                         setShowModal(false)
                         setShowMessage(""); 
                     }}
                 >Cancel</button>
-                <button onClick={() => {
+                <button onClick={(event) => {
+                    event.stopPropagation();
                     console.log(data.get());
                     const [code, result] = Application.do("appointment", "create", data.get());
                     if(code === "ok") {

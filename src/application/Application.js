@@ -26,9 +26,9 @@ export const Application = {
 
 
 // global store of appointments! May need to replace this later
-const appointments = [
-    {title: "hi", startDate: moment().toDate()},
-    {title: "bye", startDate: moment().add(2, "days").toDate() }
+let appointments = [
+    {id: "1", title: "hi", startDate: moment().toDate(), begins: moment().add(35, "minutes").toDate()},
+    {id: "2", title: "bye", startDate: moment().add(2, "days").toDate(), begins: moment().add(35, "minutes").toDate() }
 ];
 
 const externalHandle = {};
@@ -57,15 +57,27 @@ const Appointment = {
                 }
 
             case "update": 
+                console.log("updating");
                 let appt = R.find((x) => x.id === data.id, appointments);
                 if(appt === undefined) {
                     return ["error", "Appointment not found, could not update: " + JSON.stringify(data)];
                 } else {
-                    Object.assign(appt, data);
-                    return ["ok", ""];
+                    const [code, result] = Validate.do("appointment", "update", data);
+                    if(code === "ok") {
+                        Object.assign(appt, result);
+                        externalHandle.next();
+                        return ["ok", result];
+                    } else {
+                        return [code, result];
+                    }
                 } 
             case "delete": 
-                appointments.filter((x) => x.id !== data.id);
+                const index = appointments.findIndex((x) => x.id === data.id);
+                console.log("index: " + index)
+                if(index !== undefined) {
+                    appointments.splice(index, 1);
+                    externalHandle.next();
+                }
                 return ["ok", ""]
             case "read":
                 let a = R.find((x) => x.id === data.id, appointments);
@@ -153,6 +165,18 @@ export const Validate = {
                             defaultValue('endDate', moment(data.startDate).endOf('day').toDate()),
                             defaultValue('ends', moment(data.begins).toDate()),
                         );
+                        return result;
+                    }
+                    case "update": {
+                        console.log("validating update")
+                        let result = thread(data,
+                            required('title'),
+                            required('startDate'),
+                            required('begins'),
+                            defaultValue('endDate', moment(data.startDate).endOf('day').toDate()),
+                            defaultValue('ends', moment(data.begins).toDate()),
+                        );
+
                         return result;
                     }
                     default: 
