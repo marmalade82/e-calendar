@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import { FiPlus } from "react-icons/fi";
 import Modal from "react-modal";
+import { Application } from "../application/Application";
 
 
 const modalStyles = {
@@ -62,9 +63,10 @@ function AppointmentsBody(props) {
     function renderAppointments(appointments) {
 
         return appointments.map((appointment) => {
-            const {title, date} = appointment;
+            const {title, startDate, begins} = appointment;
+            console.log(appointment);
             return (
-                <Appointment appointment={appointment} key={title + date.toString()}></Appointment>
+                <Appointment appointment={appointment} key={appointment.id ? appointment.id : title + startDate.toString()}></Appointment>
             )
         })
     }
@@ -73,21 +75,29 @@ function AppointmentsBody(props) {
 function Appointment(props) {
     const [showModal, setShowModal] = React.useState(false);
     const { appointment, style } = props;
-    const {title, date} = props.appointment;
-    const time = moment(date).format("h:mm A");
+    const {title, startDate} = props.appointment;
+    const time = moment(startDate).format("h:mm A");
 
     let data = {};
+
+    function closeModal(event) {
+        event.stopPropagation();
+        setShowModal(false);
+    }
+
     return (
-        <div className={"Appointment-entry"} style={style} >
+        <div className={"Appointment-entry"} style={style} 
+            onClick={(event) => {
+                setShowModal(true);
+            }
+        }>
             <span className={"Appointment-entryTitle"}>{title}</span>
             <span className={"Appointment-entryTime"}>{time}</span>
             <Modal isOpen={showModal}
                 style={modalStyles}
             >
                 <AppointmentForm {...appointment} data={data}></AppointmentForm>
-                <button onClick={() => setShowModal(false)}>Cancel</button>
-                <button onClick={() => setShowModal(false)}>Save</button>
-                <button onClick={() => setShowModal(false)}>Delete</button>
+                <button onClick={closeModal} >Cancel</button>
             </Modal>
         </div>
     )
@@ -101,10 +111,10 @@ function AppointmentForm(props) {
     } = props;
 
     const [ _title, setTitle ] = React.useState(title ? title : "");
-    const [ _startDate, setStartDate ] = React.useState(startDate ? startDate : "");
-    const [ _endDate, setEndDate ] = React.useState(endDate ? endDate : "");
-    const [ _begins, setBegins ] = React.useState(begins ? begins : "");
-    const [ _ends, setEnds ] = React.useState(ends ? ends : "");
+    const [ _startDate, setStartDate ] = React.useState(startDate ? moment(startDate).format("YYYY-MM-DD") : "");
+    const [ _endDate, setEndDate ] = React.useState(endDate ? moment(endDate).format("YYYY-MM-DD") : "");
+    const [ _begins, setBegins ] = React.useState(begins ? moment(begins).format("HH:mm") : "");
+    const [ _ends, setEnds ] = React.useState(ends ? moment(ends).format("HH:mm") : "");
     const [ _people, setPeople ] = React.useState(people ? people : "");
     const [ _location, setLocation ] = React.useState(location ? location: "");
     const [ _description, setDescription ] = React.useState(description ? description: "");
@@ -113,10 +123,10 @@ function AppointmentForm(props) {
     data.get = () => {
         return {
             title: _title,
-            startDate: _startDate,
-            endDate: _endDate,
-            begins: _begins,
-            ends: _ends,
+            startDate: moment(_startDate, "YYYY-MM-DD").toDate(),
+            endDate: moment(_endDate, "YYYY-MM-DD").toDate(),
+            begins: moment(_begins, "HH:mm").toDate(),
+            ends: moment(_ends, "HH:mm").toDate(),
             people: _people,
             location: _location,
             description: _description,
@@ -128,40 +138,40 @@ function AppointmentForm(props) {
     }
     
     return (
-        <div class={"AppointmentForm-container"}>
-            <div class={"AppointmentForm-row"}>
-                <div class={"AppointmentForm-group"}>
+        <div className={"AppointmentForm-container"}>
+            <div className={"AppointmentForm-row"}>
+                <div className={"AppointmentForm-group"}>
                     <Label>Title:</Label><input type={"text"} value={_title} onChange={change(setTitle)}></input>
                 </div>
             </div>
-            <div class={"AppointmentForm-row"}>
-                <div class={"AppointmentForm-group"} style={firstCol}>
+            <div className={"AppointmentForm-row"}>
+                <div className={"AppointmentForm-group"} style={firstCol}>
                     <Label>Start Date:</Label><input type={"date"} value={_startDate} onChange={change(setStartDate) }></input>
                 </div>
-                <div class={"AppointmentForm-group"}>
+                <div className={"AppointmentForm-group"}>
                     <Label>End Date:</Label><input type={"date"} value={_endDate} onChange={change(setEndDate)}></input>
                 </div>
             </div>
-            <div class={"AppointmentForm-row"}>
-                <div class={"AppointmentForm-group"} style={firstCol}>
+            <div className={"AppointmentForm-row"}>
+                <div className={"AppointmentForm-group"} style={firstCol}>
                     <Label>Begins:</Label><input type={"time"} value={_begins} onChange={change(setBegins)}></input>
                 </div>
-                <div class={"AppointmentForm-group"}>
+                <div className={"AppointmentForm-group"}>
                     <Label>Ends:</Label><input type={"time"} value={_ends} onChange={change(setEnds)}></input>
                 </div>
             </div>
-            <div class={"AppointmentForm-row"}>
-                <div class={"AppointmentForm-group"}>
+            <div className={"AppointmentForm-row"}>
+                <div className={"AppointmentForm-group"}>
                     <Label>People:</Label><input type={"text"} value={_people} onChange={change(setPeople)}></input>
                 </div>
             </div>
-            <div class={"AppointmentForm-row"}>
-                <div class={"AppointmentForm-group"}>
+            <div className={"AppointmentForm-row"}>
+                <div className={"AppointmentForm-group"}>
                     <Label>Location:</Label><input type={"text"} value={_location} onChange={change(setLocation)}></input>
                 </div>
             </div>
-            <div class={"AppointmentForm-row"}>
-                <div class={"AppointmentForm-group"}>
+            <div className={"AppointmentForm-row"}>
+                <div className={"AppointmentForm-group"}>
                     <Label>Description:</Label><input type={"text"} value={_description} onChange={change(setDescription)}></input>
                 </div>
             </div>
@@ -169,6 +179,7 @@ function AppointmentForm(props) {
     )
     function change(f) {
         return (event) => {
+            console.log(JSON.stringify(event.target.value));
             f(event.target.value);
         }
     }
@@ -186,6 +197,7 @@ function Label(props) {
 
 function AddAppointment(props) {
     const [showModal, setShowModal] = React.useState(false);
+    const [message, setShowMessage] = React.useState("");
     const { style } = props;
 
     let data = {}
@@ -198,10 +210,26 @@ function AddAppointment(props) {
             <Modal isOpen={showModal}
                 style={modalStyles}
             >
+                <div className={"AddAppointment-errorContainer"}>
+                    <span className={"AddAppointment-error"}>{message}</span>
+                </div>
                 <AppointmentForm data={data}
                 ></AppointmentForm>
-                <button onClick={() => setShowModal(false)}>Cancel</button>
-                <button onClick={() => setShowModal(false)}>Submit</button>
+                <button onClick={() => {
+                        setShowModal(false)
+                        setShowMessage(""); 
+                    }}
+                >Cancel</button>
+                <button onClick={() => {
+                    console.log(data.get());
+                    const [code, result] = Application.do("appointment", "create", data.get());
+                    if(code === "ok") {
+                        setShowModal(false);
+                        setShowMessage("");
+                    } else {
+                        setShowMessage(result.toString());
+                    }
+                }}>Submit</button>
             </Modal>
 
         </div>

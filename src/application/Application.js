@@ -27,8 +27,8 @@ export const Application = {
 
 // global store of appointments! May need to replace this later
 const appointments = [
-    {title: "hi", date: moment().toDate()},
-    {title: "bye", date: moment().add(2, "days").toDate() }
+    {title: "hi", startDate: moment().toDate()},
+    {title: "bye", startDate: moment().add(2, "days").toDate() }
 ];
 
 const externalHandle = {};
@@ -46,9 +46,16 @@ const Appointment = {
     do: (action, data) => {
         switch(action) {
             case "create": 
-                data.id = Chance.guid();
-                appointments.push(data);
-                return ["ok", ""];
+                const [code, result] = Validate.do("appointment", "create", data);
+                if(code === "ok")  {
+                    result.id = Chance.guid();
+                    appointments.push(result);
+                    externalHandle.next();
+                    return ["ok", result];
+                } else {
+                    return [code, result]
+                }
+
             case "update": 
                 let appt = R.find((x) => x.id === data.id, appointments);
                 if(appt === undefined) {
@@ -112,12 +119,13 @@ const Query = {
                     case "has-appointments": {
                         return ["ok", apptObservable.pipe(map((appts) => {
                             return Object.keys(R.groupBy(day, appts)).map((dateStr) => {
-                                return moment(dateStr).toDate()
+                                console.log("DATE: " + dateStr);
+                                return moment(parseInt(dateStr)).toDate()
                             }) 
                         }))]
 
                         function day(appt) {
-                            return moment(appt.date).startOf("day").toString();
+                            return moment(appt.startDate).startOf("day").valueOf().toString();
                         }
                     }
                     default: return ["error", "Unknown date query type: " + data.type ]
@@ -128,4 +136,72 @@ const Query = {
             }
         }
     },
+}
+
+
+export const Validate = {
+    do: (context, action, data) => {
+        console.log("VALIDATING");
+        switch(context) {
+            case "appointment": {
+                switch(action) {
+                    case "create": {
+                        let result = thread(data, 
+                            required('title'), 
+                            required('startDate'), 
+                            required('begins'),
+                            defaultValue('endDate', moment(data.startDate).endOf('day').toDate()),
+                            defaultValue('ends', moment(data.begins).toDate()),
+                        );
+                        return result;
+                    }
+                    default: 
+                        return ["error", `'${action}' does is not validated in the appointment context`];
+                }
+            } 
+            default:
+                return ["error", "No validation for context: " + context];
+            
+        }
+    }
+}
+
+function thread(initialData, ...args) {
+    let f = R.pipe(
+        ...args
+    );
+    return f(["ok", initialData]);
+}
+
+function required(field){
+    return ([code, data]) => {
+        if(code === "error") {
+            return [code, data]
+        }
+
+        const val = data[field]
+        if(val === undefined) {
+            return ["error", `Field ${field} does not exist`];
+        }
+
+        if(typeof val === "string") {
+            return val.length > 0 ? ["ok", data] : ["error", field + " is required"]
+        } else if (val instanceof Date) {
+            return moment(val).isValid() ? ["ok", data] : ["error", field + " is required"]
+        }
+    }
+}
+
+function defaultValue(field, defaultVal) {
+    return ([code, data]) => {
+        if(code === "error") {
+            return [code, data]
+        }
+
+        let d = R.clone(data);
+        if(d[field] === undefined || d[field] === "" || !moment(d[field]).isValid()) {
+            d[field] = defaultVal;
+        }
+        return ["ok", d]
+    }
 }
