@@ -50,32 +50,47 @@ function App() {
   }, [])
 
   return (
-    <div id={"app"} className="App-container">
-      <Header
-        title={"eCalendar"}
-        year={moment(calendarDate).format("YYYY")}
-      ></Header>
+    <div id={"app"} className="App-container" style={{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: true,
+        justifyContent: "flex-start",
+        alignItems: "stretch",
+    }}>
+        <div className="App-calendar" style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 2,
+        }}>
+          <Header
+            title={"eCalendar"}
+            year={moment(calendarDate).format("YYYY")}
+          ></Header>
 
-      <Calendar
-        calendarDate={calendarDate}
-        onChangeCalendarDate={(date) => setCalendarDate( date )}
-        selectedDate={selectedDay}
-        onChangeDate={(date) => { 
-          setSelectedDay(date)
+          <Calendar
+            calendarDate={calendarDate}
+            onChangeCalendarDate={(date) => setCalendarDate( date )}
+            selectedDate={selectedDay}
+            onChangeDate={(date) => { 
+              setSelectedDay(date)
 
-          if(moment(date).endOf("month").isBefore(calendarDate) || 
-             moment(date).startOf("month").isAfter(calendarDate)) {
-            setCalendarDate(date);
-          }
-        }}
-        apptDates={apptDates}
-      ></Calendar>
+              if(moment(date).endOf("month").isBefore(calendarDate) || 
+                moment(date).startOf("month").isAfter(calendarDate)) {
+                setCalendarDate(date);
+              }
+            }}
+            apptDates={apptDates}
+          ></Calendar>
+        </div>
 
       <Appointments
         date = {selectedDay}
         appointments = {
           appointments
         }
+        style={{
+          flex: 1
+        }}
       ></Appointments>
     </div>
   )

@@ -4,9 +4,9 @@ var R = require('ramda');
 
 
 export default function CalendarBody(props) {
-    const { selectedDate, onChangeDate, calendarDate, apptDates } = props;
+    const { selectedDate, onChangeDate, calendarDate, apptDates, style } = props;
     return (
-        <div className={"CalendarBody-container"}>
+        <div className={"CalendarBody-container"} style={style}>
             {renderDayTitles()}
             {renderDays(calendarDate, selectedDate, onChangeDate, apptDates)}
         </div>

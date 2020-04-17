@@ -13,27 +13,53 @@ export default function Calendar(props) {
     return (
         <div className="Calendar-container">
             <Months
-                current={calendarDate}
+                currentDate={calendarDate}
+                style={{
+                    marginBottom: "1.5em",
+                }}
             ></Months>
             <div className="Calendar-body">
                 <div className="Calendar-leftArrow" 
                     onClick={() => onChangeCalendarDate(
                         moment(calendarDate).subtract(1, "month").toDate())
                     }
+                    style={{
+                        flex: 1,
+                    }}
                 >
                     <FiArrowLeft className="Calendar-leftArrowSymbol"></FiArrowLeft>
                 </div>
-                <CalendarBody
-                    calendarDate={calendarDate}
-                    selectedDate={selectedDate}
-                    onChangeDate={onChangeDate}
-                    apptDates={apptDates}
+                <div className="Calendar-aspectRatio"
+                    style={{
+                        width: "100%",
+                        paddingTop: "56%",
+                        flex: 8,
+                        position: "relative",
+                    }}
+                >
+                    <CalendarBody
+                        calendarDate={calendarDate}
+                        selectedDate={selectedDate}
+                        onChangeDate={onChangeDate}
+                        apptDates={apptDates}
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            height: "100%",
+                            width: "100%",
+                            flex: 0,
+                        }}
 
-                ></CalendarBody>
+                    ></CalendarBody>
+                </div>
                 <div className="Calendar-rightArrow" 
                     onClick={() => onChangeCalendarDate(
                         moment(calendarDate).add(1, "month").toDate())
                     }
+                    style={{
+                        flex: 1,
+                    }}
                 >
                     <FiArrowRight className="Calendar-rightArrowSymbol"></FiArrowRight>
                 </div>

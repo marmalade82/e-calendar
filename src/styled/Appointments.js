@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import { FiPlus } from "react-icons/fi";
 import Modal from "react-modal";
@@ -22,21 +22,71 @@ const modalStyles = {
     }
 }
 
+function getSeason(date) {
+    console.log(date);
+    let s = Math.floor(((moment(date).month() - 2 + 12) % 12) / 3);
+    console.log ("S: " + s);
+    return s;
+}
+
 export default function Appointments(props) {
     const { appointments, date, style } = props;
+    const [ prevSeason, setPrevSeason ] = React.useState(getSeason(date));
+
+
+    React.useEffect(() => {
+        setPrevSeason(getSeason(date));
+    }, [date]);
+
     const filteredAppts = appointments.filter((appt) => {
         return moment(appt.startDate).startOf("day").isSame(moment(date).startOf("day"));
     })
+
+    // We transition the background image based on the current month:
+    // Dec-Feb (11 - 1) : Winter
+    // Mar-May (2 - 4): Spring
+    // Jun-Aug (5 - 7): Summer
+    // Sep-Nov (8 - 10): Fall
     return (
         <div className={"Appointments-container"} style={style}>
+            {renderImage(date, prevSeason)}
             <AppointmentDate date={date} style={{
                 marginTop: "1em",
                 marginBottom: "1em",
             }}></AppointmentDate>
             <AppointmentsBody appointments={filteredAppts}></AppointmentsBody>
-            <AddAppointment></AddAppointment>
+            <AddAppointment startDate={date}></AddAppointment>
         </div>
     )
+
+    function renderImage(date, prevSeason) {
+        let season = getSeason(date);
+        console.log("Season: " + season);
+        console.log("Previous: " + prevSeason);
+
+        return (
+            <React.Fragment>
+                <img className={classes(0, season, prevSeason)} src={"./images/spring.jpg"} alt={"spring"}></img>
+                <img className={classes(1, season, prevSeason)} src={"./images/summer.jpg"} alt={"summer"}></img>
+                <img className={classes(2, season, prevSeason)} src={"./images/fall.jpg"} alt={"fall"}></img>
+                <img className={classes(3, season, prevSeason)} src={"./images/winter.jpg"} alt={"winter"}></img>
+            </React.Fragment>
+        )
+
+        function classes(season, actual, prev) {
+            let classes = [];
+            if(season === actual) {
+                classes.push("Appointments-activeSeason");
+            } else {
+                classes.push("Appointments-inactiveSeason");
+                if(season === prev) {
+                    classes.push("Appointments-prevSeason")
+                }
+            }
+
+            return classes.join(" ");
+        }
+    }
 }
 
 function AppointmentDate(props) {
@@ -53,7 +103,7 @@ function AppointmentDate(props) {
 }
 
 function AppointmentsBody(props) {
-    const { appointments, date, style } = props;
+    const { appointments, style } = props;
 
     return (
         <div className={"AppointmentsBody-container"} style={style}>
@@ -231,7 +281,7 @@ function Label(props) {
 function AddAppointment(props) {
     const [showModal, setShowModal] = React.useState(false);
     const [message, setShowMessage] = React.useState("");
-    const { style } = props;
+    const { style, startDate } = props;
 
     let data = {}
 
@@ -247,6 +297,7 @@ function AddAppointment(props) {
                     <span className={"AddAppointment-error"}>{message}</span>
                 </div>
                 <AppointmentForm data={data}
+                    startDate={startDate}
                 ></AppointmentForm>
                 <button onClick={(event) => {
                         event.stopPropagation();

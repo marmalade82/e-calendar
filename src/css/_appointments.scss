@@ -4,12 +4,41 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    padding-left: 3em;
-    padding-right: 3em;
-    padding-top: 2em;
-    padding-bottom: 2em;
-    background-color: lightyellow;
+    padding: 2em 3em 0 3em;
+    background-color: rgba(125,125,125,0.3);
+    position: relative;
+    overflow: hidden;
 }
+
+.Appointments-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    //width: auto;
+    //height: 100%;
+    -webkit-transition: opacity 2s ease-in-out;
+    -moz-transition: opacity 2s ease-in-out;
+    -o-transition: opacity 2s ease-in-out;
+    transition: opacity 2s ease-in-out;
+    object-fit: contain;
+}
+
+.Appointments-activeSeason {
+    z-index: -800;
+    opacity: 1;
+}
+
+.Appointments-prevSeason {
+    z-index: -900;
+    opacity: 1;
+}
+
+.Appointments-inactiveSeason {
+    z-index: -1000;
+    opacity: 0;
+}
+
 
 .AppointmentDate-container {
     display: flex;
@@ -27,11 +56,12 @@
 }
 
 .AppointmentsBody-container {
-    padding-left: 4em;
+    padding-left: 10%;
     border-width: 0;
-    border-left-width: 0.5em;
+    border-left-width: 0.25em;
     border-color: rgba(255,255,255,1);
     border-style: solid;
+    height: 100%;
 }
 
 .AppointmentsBody-background {
@@ -39,8 +69,9 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: rgba(125,125,125,0.2);
+    background-color: rgba(50,50,50,0.5);
     border-radius: 0.5em;
+    height: 100%;
 }
 
 .Appointment-entry {

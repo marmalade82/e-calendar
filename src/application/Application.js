@@ -26,7 +26,7 @@ export const Application = {
 
 
 // global store of appointments! May need to replace this later
-let appointments = [
+const appointments = [
     {id: "1", title: "hi", startDate: moment().toDate(), begins: moment().add(35, "minutes").toDate()},
     {id: "2", title: "bye", startDate: moment().add(2, "days").toDate(), begins: moment().add(35, "minutes").toDate() }
 ];
