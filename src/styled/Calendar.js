@@ -20,9 +20,13 @@ export default function Calendar(props) {
             ></Months>
             <div className="Calendar-body">
                 <div className="Calendar-leftArrow" 
-                    onClick={() => onChangeCalendarDate(
-                        moment(calendarDate).subtract(1, "month").toDate())
-                    }
+                    onClick={(event) => {
+                        event.stopPropagation();
+                        onChangeCalendarDate(
+                            moment(calendarDate).subtract(1, "month").toDate())
+                    }}
+                    onDoubleClickCapture={(event) => event.stopPropagation()}
+                    onMouseDownCapture={(event) => event.stopPropagation()}
                     style={{
                         flex: 1,
                     }}
@@ -54,9 +58,13 @@ export default function Calendar(props) {
                     ></CalendarBody>
                 </div>
                 <div className="Calendar-rightArrow" 
-                    onClick={() => onChangeCalendarDate(
-                        moment(calendarDate).add(1, "month").toDate())
-                    }
+                    onClick={(event) => {
+                        event.stopPropagation();
+                        onChangeCalendarDate(
+                            moment(calendarDate).add(1, "month").toDate())
+                    }}
+                    onDoubleClickCapture={(event) => event.stopPropagation()}
+                    onMouseDownCapture={(event) => event.stopPropagation()}
                     style={{
                         flex: 1,
                     }}

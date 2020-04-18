@@ -92,7 +92,10 @@ function renderDays(calendarDate, selectedDate, onChangeDate, apptDates) {
     const all = R.concat(R.concat(prevMonthDays, thisMonthDays), nextMonthDays);
     const wrapped = all.map((dayObj, index) => {
         return (
-            <div className={classes(dayObj)} onClick={() => onChangeDate(dayObj.date)}
+            <div className={classes(dayObj)} onClick={(event) => {
+                    event.stopPropagation();
+                    onChangeDate(dayObj.date)
+                }}
                 key={index}
                 style={{
                     flex: 1,
@@ -124,7 +127,7 @@ function renderDays(calendarDate, selectedDate, onChangeDate, apptDates) {
 
         function ApptIcon(date, apptDates) {
             if (R.find(sameDay, apptDates) !== undefined) {
-                return <div class={"CalendarBody-selectedIcon"}></div>
+                return <div className={"CalendarBody-selectedIcon"}></div>
             }
 
             return null;
