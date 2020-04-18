@@ -19,19 +19,17 @@
 
 .CalendarBody-dayBox {
     display: flex;
-    width: 2.3em;
-    height: 2.3em;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.CalendarBody-dayBox:hover {
+.CalendarBody-dayBox div:hover {
     cursor: pointer;
 }
 
 .CalendarBody-activeDayBox:hover {
-    cursor: pointer;
+    //cursor: pointer;
 }
 
 .CalendarBody-inactiveDay {
@@ -39,6 +37,21 @@
 }
 
 .CalendarBody-selectedDay {
-    background-color: lightgrey;
+    //background-color: lightgrey;
+    //border-radius: 50%;
+    font-weight: bold;
+}
+
+.CalendarBody-dayBox .CalendarBody-selectedIcon {
+    position: absolute;
+    background-color: lightgreen;
     border-radius: 50%;
+    height: 0.5em;
+    width: 0.5em;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: -1000;
 }

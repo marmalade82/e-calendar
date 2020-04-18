@@ -20,13 +20,21 @@ function renderDayTitles() {
 
     let renderedDays = daysOfWeek.map((day, index) => {
         return (
-            <div className={"CalendarBody-dayBox"} key={index}>
+            <div className={"CalendarBody-dayBox"} key={index}
+                style={{
+                    flex: 1,
+                }}
+            >
                 <span className={"CalendarBody-dayNumber"} key={index}>{day}</span>
             </div>
         )
     });
     return (
-        <div className={"CalendarBody-row"}>
+        <div className={"CalendarBody-row"}
+            style={{
+                flex: 1,
+            }}
+        >
             {renderedDays}
         </div>
     );
@@ -66,9 +74,12 @@ function renderDays(calendarDate, selectedDate, onChangeDate, apptDates) {
         }
     })
 
+
     const nextMonthDays = (function() {
+        // To maintain consistent styling across all months, we always need 42 days. We'll put these days into
+        // the next month.
+        const difference = Math.max(0, 42 - (thisMonthDays.length + prevMonthDays.length));
         const daysInNextMonth = moment(nextMonth).daysInMonth();
-        const difference = Math.abs(moment(currentMonth).endOf("month").day() - moment(currentMonth).endOf("month").endOf("week").day());
         const days = R.take(difference, R.range(1, daysInNextMonth));
         return days;
     })().map((day, index) => {
@@ -83,9 +94,18 @@ function renderDays(calendarDate, selectedDate, onChangeDate, apptDates) {
         return (
             <div className={classes(dayObj)} onClick={() => onChangeDate(dayObj.date)}
                 key={index}
+                style={{
+                    flex: 1,
+                }}
             >
-                {dayObj.component}
-                {ApptIcon(dayObj.date, apptDates)}
+                <div style={{
+                    display: "flex",
+                    position: "relative",
+                    padding: "1.2em",
+                }}>
+                    {dayObj.component}
+                    {ApptIcon(dayObj.date, apptDates)}
+                </div>
             </div>
         )
 
@@ -104,7 +124,7 @@ function renderDays(calendarDate, selectedDate, onChangeDate, apptDates) {
 
         function ApptIcon(date, apptDates) {
             if (R.find(sameDay, apptDates) !== undefined) {
-                return <span>i</span>
+                return <div class={"CalendarBody-selectedIcon"}></div>
             }
 
             return null;
@@ -117,7 +137,11 @@ function renderDays(calendarDate, selectedDate, onChangeDate, apptDates) {
     
     return R.splitEvery(7, wrapped).map((wrapper, index) => {
         return (
-            <div className={"CalendarBody-row"} key={"row-" + index}>
+            <div className={"CalendarBody-row"} key={"row-" + index}
+                style={{
+                    flex: 1,
+                }}
+            >
                 {wrapper}
             </div> 
         )

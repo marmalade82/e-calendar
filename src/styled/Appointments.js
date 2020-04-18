@@ -38,8 +38,10 @@ export default function Appointments(props) {
         setPrevSeason(getSeason(date));
     }, [date]);
 
-    const filteredAppts = appointments.filter((appt) => {
+    const apptsForDay = appointments.filter((appt) => {
         return moment(appt.startDate).startOf("day").isSame(moment(date).startOf("day"));
+    }).sort((a, b) => {
+        return a.begins.valueOf() - b.begins.valueOf();
     })
 
     // We transition the background image based on the current month:
@@ -54,7 +56,7 @@ export default function Appointments(props) {
                 marginTop: "1em",
                 marginBottom: "1em",
             }}></AppointmentDate>
-            <AppointmentsBody appointments={filteredAppts}></AppointmentsBody>
+            <AppointmentsBody appointments={apptsForDay}></AppointmentsBody>
             <AddAppointment startDate={date}></AddAppointment>
         </div>
     )
@@ -114,14 +116,24 @@ function AppointmentsBody(props) {
     )
 
     function renderAppointments(appointments) {
-
-        return appointments.map((appointment) => {
-            const {title, startDate, begins} = appointment;
-            console.log(appointment);
+        if(appointments.length > 0) {
+            return appointments.map((appointment) => {
+                const {title, startDate, begins} = appointment;
+                console.log(appointment);
+                return (
+                    <Appointment appointment={appointment} key={appointment.id ? appointment.id : title + startDate.toString() + begins.toString()}></Appointment>
+                )
+            })
+        } else {
             return (
-                <Appointment appointment={appointment} key={appointment.id ? appointment.id : title + startDate.toString() + begins.toString()}></Appointment>
+                <div className={"Appointment-entry"}>
+                    <span className={"Appointment-entryTitle"}>
+                        No Appointments
+                    </span>
+                </div>
             )
-        })
+        }
+
     }
 }
 
