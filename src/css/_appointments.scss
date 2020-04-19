@@ -1,14 +1,13 @@
+@use 'common';
 
 .Appointments-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    padding: 3% 4.5% 0 4.5%;
-    background-color: rgba(125,125,125,0.3);
+    @include common.responsive-container-padding(1);
+    @include common.content-column;
+    @include common.grey-background(125, 0.3);
     position: relative;
     overflow: hidden;
 }
+
 
 
 .Appointments-container img {
@@ -16,8 +15,6 @@
     top: 0;
     left: 0;
     height: 100%;
-    //width: auto;
-    //height: 100%;
     -webkit-transition: opacity 2s ease-in-out;
     -moz-transition: opacity 2s ease-in-out;
     -o-transition: opacity 2s ease-in-out;
@@ -42,73 +39,60 @@
 
 
 .AppointmentDate-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
+    @include common.content-column;
 }
 
 .AppointmentDate-day {
-    font-size: 2em;
-    font-weight: bolder;
+    @include common.header-3;
 }
 
 .AppointmentDate-date {
-    font-size: 2em;
-    font-weight: bolder;
+    @include common.header-3;
 }
 
 .AppointmentsBody-container {
+    @include common.content-column;
+    @include common.grey-border(230);
     padding-left: 10%;
     border-width: 0;
     border-left-width: 0.25em;
-    border-color: rgba(230,230,230,1);
     border-style: solid;
     height: 100%;
 }
 
 .AppointmentsBody-background {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    background-color: rgba(50,50,50,0.5);
+    @include common.content-column;
+    @include common.grey-background(50, 0.5);
+    @include common.responsive-container-padding(2);
+    @include common.grey-color(230);
     border-radius: 0.5em;
-    height: 100%;
-    color: rgb(230,230,230);
+    flex: 1;
 }
 
 .Appointment-entry {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 1em 2em 1em 2em;
+    @include common.content-column;
 }
 
-.Appointment-entry:hover {
-    cursor: pointer;
+.Appointment-noEntry {
+    @include common.content-column;
 }
+
+@include common.clickableClass(".Appointment-entry");
 
 .Appointment-entryTitle {
-    font-size: 1.5em;
+    @include common.header-4;
 }
 
 .Appointment-entryTime {
-    font-size: 1.5em;
+    @include common.header-4;
 }
 
 .AddAppointment-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @include common.center-column;
 }
 
 .AddAppointment-plus {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include common.center-row;
     padding: 1em 1em 1em 1em;
 }
 
@@ -123,7 +107,7 @@
 }
 
 .AddAppointment-plusSymbol:hover {
-    color: rgba(200, 200, 200, 1);
+    @include common.grey-color(200);
 }
 
 .AddAppointment-plusSymbol:active {
@@ -131,37 +115,30 @@
 }
 
 .AddAppointment-buttons {
-    background-color: rgb(240, 240, 240);
+    @include common.grey-background(240, 1);
 }
 
 .AddAppointment-errorContainer {
-    background-color: rgb(240, 240, 240);
+    @include common.grey-background(240, 1);
     color: red;
 }
 
 .AppointmentForm-container {
     padding: 3em 2em 3em 2em;
-    background-color: rgb(240, 240, 240);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
+    @include common.grey-background(240, 1);
+    @include common.content-column;
 }
 
 .AppointmentForm-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    @include common.content-row;
     padding-bottom: 0.7em;
     flex: 1,
 }
 
 .AppointmentForm-group {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex: 1;
+    @include common.content-row;
     align-items: center;
+    flex: 1;
 }
 
 .AppointmentForm-label {
@@ -172,7 +149,7 @@
 input {
     display: flex;
     flex: 1;
-    border-color: rgb(200, 200, 200);
+    @include common.grey-border(200);
     border-style: solid;
     border-width: 1px;
     border-radius: 0.3em;

@@ -135,7 +135,7 @@ function AppointmentsBody(props) {
             })
         } else {
             return (
-                <div className={"Appointment-entry"}>
+                <div className={"Appointment-noEntry"}>
                     <span className={"Appointment-entryTitle"}>
                         No Appointments
                     </span>

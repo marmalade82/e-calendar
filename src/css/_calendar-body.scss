@@ -1,55 +1,34 @@
-
+@use 'common';
 
 .CalendarBody-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: stretch;
+    @include common.display-column;
     border-color: black;
     border-width: 0.1em 0 0 0;
     border-style: solid;
 }
 
 .CalendarBody-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
+    @include common.display-row;
 }
 
 .CalendarBody-dayBox {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @include common.center-column;
+    @include common.header-5;
 }
 
-.CalendarBody-dayBox div:hover {
-    cursor: pointer;
-}
-
-.CalendarBody-activeDayBox:hover {
-    //cursor: pointer;
-}
+@include common.clickableClass(".CalendarBody-dayBox div");
 
 .CalendarBody-inactiveDay {
     color: grey;
 }
 
 .CalendarBody-selectedDay {
-    //background-color: lightgrey;
-    //border-radius: 50%;
     font-weight: bolder;
 }
 
-/*.CalendarBody-selectedDay>div {
-    padding-top: 100%;
-    width: 100%;
-    background-color: rgb(230, 230, 230);
-    border-radius: 50%;
-    z-index: -2000;
-    position: relative;
-}*/
+.CalendarBody-dayNumber {
+    @include common.header-5;
+}
 
 .CalendarBody-dayBox .CalendarBody-selectedIcon {
     position: absolute;

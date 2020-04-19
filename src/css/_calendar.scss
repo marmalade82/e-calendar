@@ -1,24 +1,11 @@
-
+@use 'common';
 
 .Calendar-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
+    @include common.content-column;
 }
 
-/*
 .Calendar-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: 
-}*/
-
-.Calendar-body {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: stretch;
+    @include common.display-row;
 }
 
 .Calendar-leftArrow {
@@ -35,8 +22,9 @@
     color: lightgrey;
 }
 
+@include common.clickableClass(".Calendar-leftArrowSymbol");
+
 .Calendar-leftArrowSymbol:hover {
-    cursor: pointer;
     color: black;
 }
 
@@ -54,7 +42,8 @@
     color: lightgrey;
 }
 
+@include common.clickableClass(".Calendar-rightArrowSymbol");
+
 .Calendar-rightArrowSymbol:hover {
-    cursor: pointer;
     color: black;
 }

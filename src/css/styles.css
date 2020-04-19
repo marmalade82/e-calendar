@@ -1,5 +1,5 @@
 .Header-container {
-  padding: 1em 1.5em 1em 1.5em;
+  padding: 3% 4.5% 0 4.5%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -20,6 +20,7 @@
 .Months-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
@@ -27,6 +28,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: stretch;
   align-items: center;
   min-width: 75%;
 }
@@ -38,8 +40,8 @@
 
 .Months-activeTitle {
   font-size: 2em;
+  font-weight: bolder;
   color: black;
-  font-weight: bold;
 }
 
 .CalendarBody-container {
@@ -55,7 +57,7 @@
 .CalendarBody-row {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: stretch;
 }
 
@@ -64,6 +66,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 1.2em;
 }
 
 .CalendarBody-dayBox div:hover {
@@ -78,14 +81,10 @@
   font-weight: bolder;
 }
 
-/*.CalendarBody-selectedDay>div {
-    padding-top: 100%;
-    width: 100%;
-    background-color: rgb(230, 230, 230);
-    border-radius: 50%;
-    z-index: -2000;
-    position: relative;
-}*/
+.CalendarBody-dayNumber {
+  font-size: 1.2em;
+}
+
 .CalendarBody-dayBox .CalendarBody-selectedIcon {
   position: absolute;
   background-color: green;
@@ -107,12 +106,6 @@
   align-items: stretch;
 }
 
-/*
-.Calendar-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: 
-}*/
 .Calendar-body {
   display: flex;
   flex-direction: row;
@@ -136,6 +129,9 @@
 
 .Calendar-leftArrowSymbol:hover {
   cursor: pointer;
+}
+
+.Calendar-leftArrowSymbol:hover {
   color: black;
 }
 
@@ -155,15 +151,18 @@
 
 .Calendar-rightArrowSymbol:hover {
   cursor: pointer;
+}
+
+.Calendar-rightArrowSymbol:hover {
   color: black;
 }
 
 .Appointments-container {
+  padding: 3% 4.5% 0 4.5%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  padding: 3% 4.5% 0 4.5%;
   background-color: rgba(125, 125, 125, 0.3);
   position: relative;
   overflow: hidden;
@@ -214,10 +213,14 @@
 }
 
 .AppointmentsBody-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  border-color: #e6e6e6;
   padding-left: 10%;
   border-width: 0;
   border-left-width: 0.25em;
-  border-color: #e6e6e6;
   border-style: solid;
   height: 100%;
 }
@@ -228,17 +231,24 @@
   justify-content: flex-start;
   align-items: stretch;
   background-color: rgba(50, 50, 50, 0.5);
-  border-radius: 0.5em;
-  height: 100%;
+  padding: 6% 9% 0 9%;
   color: #e6e6e6;
+  border-radius: 0.5em;
+  flex: 1;
 }
 
 .Appointment-entry {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 1em 2em 1em 2em;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.Appointment-noEntry {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
 .Appointment-entry:hover {
@@ -262,6 +272,7 @@
 
 .AddAppointment-plus {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 1em 1em 1em 1em;
@@ -307,6 +318,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  align-items: stretch;
   padding-bottom: 0.7em;
   flex: 1;
 }
@@ -315,8 +327,9 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  flex: 1;
+  align-items: stretch;
   align-items: center;
+  flex: 1;
 }
 
 .AppointmentForm-label {
@@ -365,10 +378,6 @@ input {
 }
 
 #app {
-  font-family: "Comic Neue", "Open Sans", sans-serif;
-}
-
-#app * {
   font-family: "Comic Neue", "Open Sans", sans-serif;
 }
 

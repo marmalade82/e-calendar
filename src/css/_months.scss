@@ -1,25 +1,21 @@
+@use "common";
 
 .Months-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include common.center-column;
 }
 
 .Months-position {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    @include common.display-row;
     align-items: center;
     min-width: 75%;
 }
 
 .Months-title {
-    font-size: 1.5em;
+    @include common.header-4;
     color: grey;
 }
 
 .Months-activeTitle {
-    font-size: 2em;
+    @include common.header-3;
     color: black;
-    font-weight: bold;
 }

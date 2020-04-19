@@ -3,7 +3,7 @@
 @use 'calendar-body';
 @use 'calendar';
 @use 'appointments';
-
+@use 'common';
 
 
 #app span {
@@ -23,9 +23,5 @@
 }
 
 #app {
-    font-family: 'Comic Neue', 'Open Sans', sans-serif;
-}
-
-#app * {
-    font-family: 'Comic Neue', 'Open Sans', sans-serif;
+    @include common.base-font;
 }
