@@ -57,7 +57,6 @@ const Appointment = {
                 }
 
             case "update": 
-                console.log("updating");
                 let appt = R.find((x) => x.id === data.id, appointments);
                 if(appt === undefined) {
                     return ["error", "Appointment not found, could not update: " + JSON.stringify(data)];
@@ -73,7 +72,6 @@ const Appointment = {
                 } 
             case "delete": 
                 const index = appointments.findIndex((x) => x.id === data.id);
-                console.log("index: " + index)
                 if(index !== undefined) {
                     appointments.splice(index, 1);
                     externalHandle.next();
@@ -131,7 +129,6 @@ const Query = {
                     case "has-appointments": {
                         return ["ok", apptObservable.pipe(map((appts) => {
                             return Object.keys(R.groupBy(day, appts)).map((dateStr) => {
-                                console.log("DATE: " + dateStr);
                                 return moment(parseInt(dateStr)).toDate()
                             }) 
                         }))]
@@ -153,7 +150,6 @@ const Query = {
 
 export const Validate = {
     do: (context, action, data) => {
-        console.log("VALIDATING");
         switch(context) {
             case "appointment": {
                 switch(action) {
@@ -168,7 +164,6 @@ export const Validate = {
                         return result;
                     }
                     case "update": {
-                        console.log("validating update")
                         let result = thread(data,
                             required('title', "Title"),
                             required('startDate', "Start date"),

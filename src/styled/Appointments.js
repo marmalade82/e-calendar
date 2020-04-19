@@ -32,9 +32,7 @@ const modalStyles = {
 }
 
 function getSeason(date) {
-    console.log(date);
     let s = Math.floor(((moment(date).month() - 2 + 12) % 12) / 3);
-    console.log ("S: " + s);
     return s;
 }
 
@@ -72,8 +70,6 @@ export default function Appointments(props) {
 
     function renderImage(date, prevSeason) {
         let season = getSeason(date);
-        console.log("Season: " + season);
-        console.log("Previous: " + prevSeason);
 
         return (
             <React.Fragment>
@@ -128,7 +124,6 @@ function AppointmentsBody(props) {
         if(appointments.length > 0) {
             return appointments.map((appointment) => {
                 const {title, startDate, begins} = appointment;
-                console.log(appointment);
                 return (
                     <Appointment appointment={appointment} key={appointment.id ? appointment.id : title + startDate.toString() + begins.toString()}></Appointment>
                 )
@@ -205,7 +200,6 @@ function Appointment(props) {
                         className="form-button"
                     >Cancel</button>
                     <button onClick={(event) => {
-                            console.log(data.get());
                             let d = data.get();
                             d.id = appointment.id;
                             const [code, result] = Application.do("appointment", "update", d);
@@ -223,8 +217,6 @@ function Appointment(props) {
                         className="form-button"
                     >Save</button>
                     <button onClick={(event) => {
-                            console.log("deleting: ")
-                            console.log(appointment);
                             const [code, result] = Application.do("appointment", "delete", appointment)
                             if(code === "ok") {
                                 closeModal(event);
@@ -323,7 +315,6 @@ function AppointmentForm(props) {
     )
     function change(f) {
         return (event) => {
-            console.log(JSON.stringify(event.target.value));
             f(event.target.value);
         }
     }
@@ -391,7 +382,6 @@ function AddAppointment(props) {
                     >Cancel</button>
                     <button onClick={(event) => {
                             event.stopPropagation();
-                            console.log(data.get());
                             const [code, result] = Application.do("appointment", "create", data.get());
                             if(code === "ok") {
                                 setShowModal(false);

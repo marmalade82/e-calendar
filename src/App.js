@@ -30,7 +30,6 @@ function App() {
 
         if(code === "ok") {
           obs.subscribe((appts) => {
-            console.log("rerendering appointments!")
             setAppointments(appts)
           })
         }
