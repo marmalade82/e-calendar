@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import moment from "moment";
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiColumns } from "react-icons/fi";
 import Modal from "react-modal";
 import { Application } from "../application/Application";
 
@@ -12,11 +12,20 @@ const modalStyles = {
         left: 0,
         right: 0,
         bottom: 0,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
     },
     content: {
-        padding: "0",
-        top: '300px',
-        left: '300px',
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
+        position: "staic",
+        padding: 0,
+        //top: '300px',
+        //left: '300px',
         //right: '300px',
         //bottom: '300px',
     }
@@ -162,37 +171,75 @@ function Appointment(props) {
             <Modal isOpen={showModal}
                 style={modalStyles}
             >
-                <div className={"AddAppointment-errorContainer"}>
-                    <span className={"AddAppointment-error"}>{message}</span>
+                <div className={"AddAppointment-errorContainer"}
+                    style={{
+                        flex: 1,
+                        padding: "2em 2em 0 2em",
+                    }}>
+                    <span className={"AddAppointment-error"} style={{
+                        display: "inline-block",
+                        height: "1em",
+                    }}>{" " + message}</span>
                 </div>
-                <AppointmentForm {...appointment} data={data}></AppointmentForm>
-                <button onClick={(event) => {
-                    setMessage("");
-                    closeModal(event);
-                }} >Cancel</button>
-                <button onClick={(event) => {
-                    console.log(data.get());
-                    let d = data.get();
-                    d.id = appointment.id;
-                    const [code, result] = Application.do("appointment", "update", d);
-                    if(code === "ok") {
-                        closeModal(event);
-                        setMessage("");
-                    } else {
-                        setMessage(result);
-                    }
-                }} >Save</button>
-                <button onClick={(event) => {
-                    console.log("deleting: ")
-                    console.log(appointment);
-                    const [code, result] = Application.do("appointment", "delete", appointment)
-                    if(code === "ok") {
-                        closeModal(event);
-                        setMessage("");
-                    } else {
-                        setMessage(result);
-                    }
-                }} >Delete</button>
+                <AppointmentForm {...appointment} data={data}
+                    style={{
+                        paddingTop: "1em",
+                        paddingBottom: "1em",
+                    }}
+                ></AppointmentForm>
+                <div className={"AddAppointment-buttons"} style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "stretch",
+                    paddingBottom: "2em",
+                }}>
+                    <button onClick={(event) => {
+                            setMessage("");
+                            closeModal(event);
+                        }} 
+                        style={{
+                            flex: 0.5,
+                            margin: "0 2em 0 2em",
+                        }}
+                        className="form-button"
+                    >Cancel</button>
+                    <button onClick={(event) => {
+                            console.log(data.get());
+                            let d = data.get();
+                            d.id = appointment.id;
+                            const [code, result] = Application.do("appointment", "update", d);
+                            if(code === "ok") {
+                                closeModal(event);
+                                setMessage("");
+                            } else {
+                                setMessage(result);
+                            }
+                        }}
+                        style={{
+                            flex: 1,
+                            margin: "0 2em 0 2em",
+                        }}
+                        className="form-button"
+                    >Save</button>
+                    <button onClick={(event) => {
+                            console.log("deleting: ")
+                            console.log(appointment);
+                            const [code, result] = Application.do("appointment", "delete", appointment)
+                            if(code === "ok") {
+                                closeModal(event);
+                                setMessage("");
+                            } else {
+                                setMessage(result);
+                            }
+                        }} 
+                        style={{
+                            flex: 1,
+                            margin: "0 2em 0 2em",
+                        }}
+                        className="form-button"
+                    >Delete</button>
+                </div>
             </Modal>
         </div>
     )
@@ -202,7 +249,7 @@ function AppointmentForm(props) {
     // Set initial values based on props;
     const {
         title, startDate, endDate, begins, ends, people, location, description,
-        data,
+        data, style
     } = props;
 
     const [ _title, setTitle ] = React.useState(title ? title : "");
@@ -233,7 +280,9 @@ function AppointmentForm(props) {
     }
     
     return (
-        <div className={"AppointmentForm-container"}>
+        <div className={"AppointmentForm-container"}
+            style={style}
+        >
             <div className={"AppointmentForm-row"}>
                 <div className={"AppointmentForm-group"}>
                     <Label>Title:</Label><input type={"text"} value={_title} onChange={change(setTitle)}></input>
@@ -305,29 +354,59 @@ function AddAppointment(props) {
             <Modal isOpen={showModal}
                 style={modalStyles}
             >
-                <div className={"AddAppointment-errorContainer"}>
-                    <span className={"AddAppointment-error"}>{message}</span>
+                <div className={"AddAppointment-errorContainer"}
+                    style={{
+                        flex: 1,
+                        padding: "2em 2em 0 2em",
+                    }}>
+                    <span className={"AddAppointment-error"} style={{
+                        display: "inline-block",
+                        height: "1em",
+                    }}>{" " + message}</span>
                 </div>
                 <AppointmentForm data={data}
                     startDate={startDate}
-                ></AppointmentForm>
-                <button onClick={(event) => {
-                        event.stopPropagation();
-                        setShowModal(false)
-                        setShowMessage(""); 
+                    style={{
+                        paddingTop: "1em",
+                        paddingBottom: "1em",
                     }}
-                >Cancel</button>
-                <button onClick={(event) => {
-                    event.stopPropagation();
-                    console.log(data.get());
-                    const [code, result] = Application.do("appointment", "create", data.get());
-                    if(code === "ok") {
-                        setShowModal(false);
-                        setShowMessage("");
-                    } else {
-                        setShowMessage(result.toString());
-                    }
-                }}>Submit</button>
+                ></AppointmentForm>
+                <div className={"AddAppointment-buttons"} style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "stretch",
+                    paddingBottom: "2em",
+                }}>
+                    <button onClick={(event) => {
+                            event.stopPropagation();
+                            setShowModal(false)
+                            setShowMessage(""); 
+                        }}
+                        style={{
+                            flex: 1,
+                            margin: "0 2em 0 2em",
+                        }}
+                        className="form-button"
+                    >Cancel</button>
+                    <button onClick={(event) => {
+                            event.stopPropagation();
+                            console.log(data.get());
+                            const [code, result] = Application.do("appointment", "create", data.get());
+                            if(code === "ok") {
+                                setShowModal(false);
+                                setShowMessage("");
+                            } else {
+                                setShowMessage(result.toString());
+                            }
+                        }}
+                        style={{
+                            flex: 2,
+                            margin: "0 2em 0 2em",
+                        }}
+                        className="form-button"
+                    >Submit</button>
+                </div>
             </Modal>
 
         </div>

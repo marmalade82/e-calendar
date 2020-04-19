@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    padding: 2em 3em 0 3em;
+    padding: 3% 4.5% 0 4.5%;
     background-color: rgba(125,125,125,0.3);
     position: relative;
     overflow: hidden;
@@ -50,17 +50,19 @@
 
 .AppointmentDate-day {
     font-size: 2em;
+    font-weight: bolder;
 }
 
 .AppointmentDate-date {
     font-size: 2em;
+    font-weight: bolder;
 }
 
 .AppointmentsBody-container {
     padding-left: 10%;
     border-width: 0;
     border-left-width: 0.25em;
-    border-color: rgba(255,255,255,1);
+    border-color: rgba(230,230,230,1);
     border-style: solid;
     height: 100%;
 }
@@ -73,6 +75,7 @@
     background-color: rgba(50,50,50,0.5);
     border-radius: 0.5em;
     height: 100%;
+    color: rgb(230,230,230);
 }
 
 .Appointment-entry {
@@ -127,6 +130,15 @@
     color: black;
 }
 
+.AddAppointment-buttons {
+    background-color: rgb(240, 240, 240);
+}
+
+.AddAppointment-errorContainer {
+    background-color: rgb(240, 240, 240);
+    color: red;
+}
+
 .AppointmentForm-container {
     padding: 3em 2em 3em 2em;
     background-color: rgb(240, 240, 240);
@@ -141,6 +153,7 @@
     flex-direction: row;
     justify-content: flex-start;
     padding-bottom: 0.7em;
+    flex: 1,
 }
 
 .AppointmentForm-group {
@@ -153,8 +166,7 @@
 
 .AppointmentForm-label {
     display: flex;
-    flex: 1;
-    max-width: 8em;
+    width: 8em;
 }
 
 input {
@@ -165,4 +177,8 @@ input {
     border-width: 1px;
     border-radius: 0.3em;
     padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+.form-button {
+    padding: 0.5em 0 0.5em 0;
 }

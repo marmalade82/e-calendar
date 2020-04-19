@@ -36,7 +36,7 @@ export default function Calendar(props) {
                 <div className="Calendar-aspectRatio"
                     style={{
                         width: "100%",
-                        paddingTop: "56%",
+                        paddingTop: "62%",
                         flex: 8,
                         position: "relative",
                     }}

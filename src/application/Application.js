@@ -159,9 +159,9 @@ export const Validate = {
                 switch(action) {
                     case "create": {
                         let result = thread(data, 
-                            required('title'), 
-                            required('startDate'), 
-                            required('begins'),
+                            required('title', "Title"), 
+                            required('startDate', "Start date"), 
+                            required('begins', "Begins"),
                             defaultValue('endDate', moment(data.startDate).endOf('day').toDate()),
                             defaultValue('ends', moment(data.begins).toDate()),
                         );
@@ -170,9 +170,9 @@ export const Validate = {
                     case "update": {
                         console.log("validating update")
                         let result = thread(data,
-                            required('title'),
-                            required('startDate'),
-                            required('begins'),
+                            required('title', "Title"),
+                            required('startDate', "Start date"),
+                            required('begins', "Begins"),
                             defaultValue('endDate', moment(data.startDate).endOf('day').toDate()),
                             defaultValue('ends', moment(data.begins).toDate()),
                         );
@@ -197,7 +197,7 @@ function thread(initialData, ...args) {
     return f(["ok", initialData]);
 }
 
-function required(field){
+function required(field, label){
     return ([code, data]) => {
         if(code === "error") {
             return [code, data]
@@ -209,9 +209,9 @@ function required(field){
         }
 
         if(typeof val === "string") {
-            return val.length > 0 ? ["ok", data] : ["error", field + " is required"]
+            return val.length > 0 ? ["ok", data] : ["error", label + " is required"]
         } else if (val instanceof Date) {
-            return moment(val).isValid() ? ["ok", data] : ["error", field + " is required"]
+            return moment(val).isValid() ? ["ok", data] : ["error", label + " is required"]
         }
     }
 }

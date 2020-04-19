@@ -39,16 +39,25 @@
 .CalendarBody-selectedDay {
     //background-color: lightgrey;
     //border-radius: 50%;
-    font-weight: bold;
+    font-weight: bolder;
 }
+
+/*.CalendarBody-selectedDay>div {
+    padding-top: 100%;
+    width: 100%;
+    background-color: rgb(230, 230, 230);
+    border-radius: 50%;
+    z-index: -2000;
+    position: relative;
+}*/
 
 .CalendarBody-dayBox .CalendarBody-selectedIcon {
     position: absolute;
-    background-color: lightgreen;
+    background-color: green;
     border-radius: 50%;
     height: 0.5em;
     width: 0.5em;
-    bottom: 0;
+    bottom: 0.3em;
     left: 0;
     right: 0;
     margin-left: auto;
