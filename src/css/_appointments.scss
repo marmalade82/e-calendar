@@ -1,25 +1,32 @@
 @use 'common';
 
 .Appointments-container {
-    @include common.responsive-container-padding(1);
     @include common.content-column;
     @include common.grey-background(125, 0.3);
     position: relative;
     overflow: hidden;
+
+    @include common.screen {
+        @include common.responsive-container-padding(1);
+        flex: 1,
+    }
+
+    @include common.tablet {
+        @include common.responsive-container-padding(3);
+        flex: 0;
+        height: 120vw;
+    }
 }
-
-
 
 .Appointments-container img {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
     -webkit-transition: opacity 2s ease-in-out;
     -moz-transition: opacity 2s ease-in-out;
     -o-transition: opacity 2s ease-in-out;
     transition: opacity 2s ease-in-out;
-    object-fit: contain;
+    height: 100%;
 }
 
 .Appointments-activeSeason {

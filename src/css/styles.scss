@@ -24,4 +24,22 @@
 
 #app {
     @include common.base-font;
+
+    @include common.screen {
+        font-size: 17px;
+    }
+
+    @include common.tablet {
+        font-size: calc(14px + 0.3vw);
+    }
+}
+
+#app {
+    @include common.screen {
+        @include common.content-row;
+    }
+
+    @include common.tablet {
+        @include common.content-column;
+    }
 }

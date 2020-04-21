@@ -11,11 +11,11 @@
 
 .Header-title {
     @include common.header-2;
-    display: flex;
+    display: inline;
 }
 
 .Header-year {
-    @include common.header-4;
-    display: flex;
+    @include common.header-3;
+    display: inline;
 }
 

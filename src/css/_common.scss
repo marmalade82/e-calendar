@@ -1,5 +1,14 @@
+$tablet: 850px;
+$mobile: 400px;
+
 @mixin responsive-container-padding($factor) {
-    padding: ($factor * 3%) ($factor * 4.5%) 0 ($factor * 4.5%);
+    @include screen {
+        padding: ($factor * 3%) ($factor * 4.5%) 0 ($factor * 4.5%);
+    }
+
+    @include tablet {
+        padding: ($factor * 3vw) ($factor * 4.5vw) 0 ($factor * 3vw);
+    }
 }
 
 @mixin content-column {
@@ -57,21 +66,45 @@
 }
 
 @mixin header-2 {
-    font-size: 3em;
-    font-weight: normal;
+    @include screen {
+        font-size: 3em;
+        font-weight: normal;
+    }
+
+    @include tablet {
+        font-size: calc(2.3em + 1vw);
+        font-weight: bold;
+    }
 }
 
 @mixin header-3 {
-    font-size: 2em;
-    font-weight: bolder;
+    font-weight: normal;
+    @include screen {
+        font-size: 2em;
+    }
+    @include tablet {
+        font-size: calc(1.7em + 1vw);
+    }
 }
 
 @mixin header-4 {
-    font-size: 1.5em;
+    @include screen {
+        font-size: 1.5em;
+    }
+
+    @include tablet {
+        font-size: calc(1.3em + 1vw);
+    }
 }
 
 @mixin header-5 {
-    font-size: 1.2em;
+    @include screen {
+        font-size: 1.2em;
+    }
+
+    @include tablet {
+        font-size: calc(1.2em + 1vw);
+    }
 }
 
 @mixin clickableClass($selector) {
@@ -82,4 +115,16 @@
 
 @mixin base-font {
     font-family: 'Comic Neue', 'Open Sans', sans-serif;
+}
+
+@mixin screen {
+    @media (min-width: $tablet) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media  (max-width: $tablet) {
+        @content;
+    }
 }

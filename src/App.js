@@ -50,11 +50,6 @@ function App() {
 
   return (
     <div id={"app"} className="App-container" style={{
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: true,
-        justifyContent: "flex-start",
-        alignItems: "stretch",
     }}>
         <div className="App-calendar" style={{
           display: "flex",

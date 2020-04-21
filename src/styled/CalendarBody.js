@@ -25,7 +25,9 @@ function renderDayTitles() {
                     flex: 1,
                 }}
             >
-                <span className={"CalendarBody-dayNumber"} key={index}>{day}</span>
+                <div className={"CalendarBody-dayWrapper"}>
+                    <span className={"CalendarBody-dayNumber"} key={index}>{day}</span>
+                </div>
             </div>
         )
     });
@@ -101,11 +103,7 @@ function renderDays(calendarDate, selectedDate, onChangeDate, apptDates) {
                     flex: 1,
                 }}
             >
-                <div style={{
-                    display: "flex",
-                    position: "relative",
-                    padding: "1.2em",
-                }}>
+                <div className={"CalendarBody-dayWrapper"} style={{}}>
                     {dayObj.component}
                     {ApptIcon(dayObj.date, apptDates)}
                 </div>
