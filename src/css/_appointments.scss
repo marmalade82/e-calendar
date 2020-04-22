@@ -1,5 +1,7 @@
 @use 'common';
 
+$row-spacing: 0.7em;
+
 .Appointments-container {
     @include common.content-column;
     @include common.grey-background(125, 0.3);
@@ -15,6 +17,10 @@
         @include common.responsive-container-padding(3);
         flex: 0;
         height: 120vw;
+    }
+
+    @include common.tablet {
+        height: 170vw;
     }
 }
 
@@ -123,6 +129,26 @@
 
 .AddAppointment-buttons {
     @include common.grey-background(240, 1);
+
+    @include common.screen {
+        @include common.content-row;
+        flex-wrap: wrap;
+        padding-bottom: 2em;
+    }
+
+    @include common.tablet {
+        @include common.content-row;
+        flex-wrap: wrap;
+        padding-bottom: 2em;
+    }
+
+    @include common.mobile {
+        @include common.content-column;
+        flex-direction: column-reverse;
+        flex-wrap: wrap;
+        font-size: 50px;
+        padding-bottom: 1em;
+    }
 }
 
 .AddAppointment-errorContainer {
@@ -138,20 +164,45 @@
 }
 
 .AppointmentForm-row {
-    @include common.content-row;
-    padding-bottom: 0.7em;
-    flex: 1,
+    @include common.screen {
+        @include common.content-row;
+    }
+    @include common.tablet {
+        @include common.content-column;
+    }
+    padding-bottom: $row-spacing;
+    flex: 1;
 }
 
 .AppointmentForm-group {
     @include common.content-row;
     align-items: center;
     flex: 1;
+
+    @include common.mobile {
+        @include common.content-column;
+    }
 }
 
 .AppointmentForm-label {
     display: flex;
-    width: 8em;
+    @include common.screen {
+        width: 8em;
+    }
+
+    @include common.tablet {
+        width: calc(6em + 1vw);
+    }
+}
+
+.AppointmentForm-firstCol {
+    @include common.screen {
+        margin-right: 1em;
+    }
+    @include common.tablet {
+        margin-right: 0;
+        margin-bottom: $row-spacing;
+    }
 }
 
 input {
@@ -166,4 +217,10 @@ input {
 
 .form-button {
     padding: 0.5em 0 0.5em 0;
+    flex: 1;
+    margin: 0 2em 0 2em;
+
+    @include common.mobile {
+        margin-bottom: $row-spacing;
+    }
 }

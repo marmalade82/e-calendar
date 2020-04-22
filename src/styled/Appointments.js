@@ -28,10 +28,6 @@ const modalScreenStyles = {
         position: "static",
         padding: 0,
         width: "800px",
-        //top: '300px',
-        //left: '300px',
-        //right: '300px',
-        //bottom: '300px',
     }
 }
 
@@ -54,11 +50,7 @@ const modalTabletStyles = {
         alignItems: "stretch",
         position: "static",
         padding: 0,
-        width: "20px",
-        //top: '300px',
-        //left: '300px',
-        //right: '300px',
-        //bottom: '300px',
+        width: "100%",
     }
 }
 
@@ -81,10 +73,7 @@ const modalMobileStyles = {
         alignItems: "stretch",
         position: "static",
         padding: 0,
-        //top: '300px',
-        //left: '300px',
-        //right: '300px',
-        //bottom: '300px',
+        width: "100%",
     }
 }
 
@@ -275,21 +264,12 @@ function Appointment(props) {
                         paddingBottom: "1em",
                     }}
                 ></AppointmentForm>
-                <div className={"AddAppointment-buttons"} style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "stretch",
-                    paddingBottom: "2em",
-                }}>
+                <div className={"AddAppointment-buttons"} style={{ }}>
                     <button onClick={(event) => {
                             setMessage("");
                             closeModal(event);
                         }} 
-                        style={{
-                            flex: 0.5,
-                            margin: "0 2em 0 2em",
-                        }}
+                        style={{ }}
                         className="form-button"
                     >Cancel</button>
                     <button onClick={(event) => {
@@ -303,10 +283,7 @@ function Appointment(props) {
                                 setMessage(result);
                             }
                         }}
-                        style={{
-                            flex: 1,
-                            margin: "0 2em 0 2em",
-                        }}
+                        style={{ }}
                         className="form-button"
                     >Save</button>
                     <button onClick={(event) => {
@@ -318,10 +295,7 @@ function Appointment(props) {
                                 setMessage(result);
                             }
                         }} 
-                        style={{
-                            flex: 1,
-                            margin: "0 2em 0 2em",
-                        }}
+                        style={{ }}
                         className="form-button"
                     >Delete</button>
                 </div>
@@ -360,10 +334,6 @@ function AppointmentForm(props) {
         };
     }
 
-    const firstCol = {
-        marginRight: "1em",
-    }
-    
     return (
         <div className={"AppointmentForm-container"}
             style={style}
@@ -374,7 +344,7 @@ function AppointmentForm(props) {
                 </div>
             </div>
             <div className={"AppointmentForm-row"}>
-                <div className={"AppointmentForm-group"} style={firstCol}>
+                <div className={"AppointmentForm-group AppointmentForm-firstCol"}>
                     <Label>Start Date:</Label><input type={"date"} value={_startDate} onChange={change(setStartDate) }></input>
                 </div>
                 <div className={"AppointmentForm-group"}>
@@ -382,7 +352,7 @@ function AppointmentForm(props) {
                 </div>
             </div>
             <div className={"AppointmentForm-row"}>
-                <div className={"AppointmentForm-group"} style={firstCol}>
+                <div className={"AppointmentForm-group AppointmentForm-firstCol"}>
                     <Label>Begins:</Label><input type={"time"} value={_begins} onChange={change(setBegins)}></input>
                 </div>
                 <div className={"AppointmentForm-group"}>
@@ -455,22 +425,13 @@ function AddAppointment(props) {
                         paddingBottom: "1em",
                     }}
                 ></AppointmentForm>
-                <div className={"AddAppointment-buttons"} style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "stretch",
-                    paddingBottom: "2em",
-                }}>
+                <div className={"AddAppointment-buttons"} style={{ }}>
                     <button onClick={(event) => {
                             event.stopPropagation();
                             setShowModal(false)
                             setShowMessage(""); 
                         }}
-                        style={{
-                            flex: 1,
-                            margin: "0 2em 0 2em",
-                        }}
+                        style={{ }}
                         className="form-button"
                     >Cancel</button>
                     <button onClick={(event) => {
@@ -483,10 +444,7 @@ function AddAppointment(props) {
                                 setShowMessage(result.toString());
                             }
                         }}
-                        style={{
-                            flex: 2,
-                            margin: "0 2em 0 2em",
-                        }}
+                        style={{ }}
                         className="form-button"
                     >Submit</button>
                 </div>

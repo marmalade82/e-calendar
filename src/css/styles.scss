@@ -30,7 +30,11 @@
     }
 
     @include common.tablet {
-        font-size: calc(14px + 0.3vw);
+        font-size: calc(12px + 0.3vw);
+    }
+
+    @include common.mobile {
+        font-size: 11px;
     }
 }
 

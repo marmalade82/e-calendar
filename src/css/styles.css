@@ -286,6 +286,11 @@
     padding: 9vw 13.5vw 0 9vw;
   }
 }
+@media (max-width: 850px) {
+  .Appointments-container {
+    height: 170vw;
+  }
+}
 
 .Appointments-container img {
   position: absolute;
@@ -458,6 +463,38 @@
 .AddAppointment-buttons {
   background-color: #f0f0f0;
 }
+@media (min-width: 850px) {
+  .AddAppointment-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+    padding-bottom: 2em;
+  }
+}
+@media (max-width: 850px) {
+  .AddAppointment-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+    padding-bottom: 2em;
+  }
+}
+@media (max-width: 400px) {
+  .AddAppointment-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    font-size: 50px;
+    padding-bottom: 1em;
+  }
+}
 
 .AddAppointment-errorContainer {
   background-color: #f0f0f0;
@@ -475,12 +512,24 @@
 }
 
 .AppointmentForm-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: stretch;
   padding-bottom: 0.7em;
   flex: 1;
+}
+@media (min-width: 850px) {
+  .AppointmentForm-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+}
+@media (max-width: 850px) {
+  .AppointmentForm-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
 }
 
 .AppointmentForm-group {
@@ -491,10 +540,39 @@
   align-items: center;
   flex: 1;
 }
+@media (max-width: 400px) {
+  .AppointmentForm-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+}
 
 .AppointmentForm-label {
   display: flex;
-  width: 8em;
+}
+@media (min-width: 850px) {
+  .AppointmentForm-label {
+    width: 8em;
+  }
+}
+@media (max-width: 850px) {
+  .AppointmentForm-label {
+    width: calc(6em + 1vw);
+  }
+}
+
+@media (min-width: 850px) {
+  .AppointmentForm-firstCol {
+    margin-right: 1em;
+  }
+}
+@media (max-width: 850px) {
+  .AppointmentForm-firstCol {
+    margin-right: 0;
+    margin-bottom: 0.7em;
+  }
 }
 
 input {
@@ -509,6 +587,13 @@ input {
 
 .form-button {
   padding: 0.5em 0 0.5em 0;
+  flex: 1;
+  margin: 0 2em 0 2em;
+}
+@media (max-width: 400px) {
+  .form-button {
+    margin-bottom: 0.7em;
+  }
 }
 
 #app span {
@@ -547,7 +632,12 @@ input {
 }
 @media (max-width: 850px) {
   #app {
-    font-size: calc(14px + 0.3vw);
+    font-size: calc(12px + 0.3vw);
+  }
+}
+@media (max-width: 400px) {
+  #app {
+    font-size: 11px;
   }
 }
 
