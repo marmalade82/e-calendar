@@ -4,9 +4,6 @@ The eCalendar is a simple web application that allows the user to create, delete
 
 Built with HTML, CSS, and JavaScript (React).
 
-
-## SHOW A FEW IMAGES HERE ##
-
 ## Features
 
 - Calendar interface
@@ -34,6 +31,19 @@ Built with HTML, CSS, and JavaScript (React).
 - Ramda
 - RxJS
 - Chance.js
+- Create React App
+- Express.js
 
 
 ## Build/Deploy Instructions
+
+Pre-requisites:
+
+- Node >= 10.18.1
+- NPM >= 6.13.4
+
+To generate the production build, run `npm run build`. Running `node app-server.js` will deploy on port 5500. To specify another port, like 5001, run `node app-server.js 5001`.
+
+## Contact
+
+Questions/comments can be sent to <hchen7913@gmail.com>
