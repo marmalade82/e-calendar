@@ -1,11 +1,14 @@
 import React from "react";
 import moment from "moment";
-import { FiPlus, FiColumns } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 import Modal from "react-modal";
 import { Application } from "../application/Application";
 
+const isScreen = window.matchMedia("(min-width: 850px)");
+const isTablet = window.matchMedia("(max-width: 850px) and (min-width: 400px)");
+const isMobile = window.matchMedia("(max-width: 400px)");
 
-const modalStyles = {
+const modalScreenStyles = {
     overlay: {
         position: 'fixed',
         top: 0,
@@ -22,7 +25,61 @@ const modalStyles = {
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "stretch",
-        position: "staic",
+        position: "static",
+        padding: 0,
+        width: "800px",
+        //top: '300px',
+        //left: '300px',
+        //right: '300px',
+        //bottom: '300px',
+    }
+}
+
+const modalTabletStyles = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    content: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
+        position: "static",
+        padding: 0,
+        width: "20px",
+        //top: '300px',
+        //left: '300px',
+        //right: '300px',
+        //bottom: '300px',
+    }
+}
+
+const modalMobileStyles = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    content: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
+        position: "static",
         padding: 0,
         //top: '300px',
         //left: '300px',
@@ -39,6 +96,34 @@ function getSeason(date) {
 export default function Appointments(props) {
     const { appointments, date, style } = props;
     const [ prevSeason, setPrevSeason ] = React.useState(getSeason(date));
+    const [ modalStyles, setModalStyles] = React.useState(
+        isScreen.matches ? modalScreenStyles : 
+        isTablet.matches ? modalTabletStyles : 
+        isMobile.matches ? modalMobileStyles : 
+            modalScreenStyles);
+
+    React.useEffect(() => {
+        const screen = (e) => {
+            if(e.matches) setModalStyles(modalScreenStyles);
+        }
+        isScreen.addListener(screen);
+
+        const tablet = (e) => {
+            if(e.matches) setModalStyles(modalTabletStyles);
+        };
+        isTablet.addListener(tablet)
+
+        const mobile = (e) => {
+            if(e.matches) setModalStyles(modalMobileStyles);
+        };
+        isMobile.addListener(mobile)
+
+        return () => {
+            isScreen.removeListener(screen)
+            isTablet.removeListener(tablet);
+            isMobile.removeListener(mobile);
+        }
+    }, [])
 
 
     React.useEffect(() => {
@@ -63,8 +148,13 @@ export default function Appointments(props) {
                 marginTop: "1em",
                 marginBottom: "1em",
             }}></AppointmentDate>
-            <AppointmentsBody appointments={apptsForDay}></AppointmentsBody>
-            <AddAppointment startDate={date}></AddAppointment>
+            <AppointmentsBody appointments={apptsForDay}
+                modalStyles={modalStyles}>
+            </AppointmentsBody>
+            <AddAppointment startDate={date}
+                modalStyles={modalStyles}
+            >
+            </AddAppointment>
         </div>
     )
 
@@ -110,7 +200,7 @@ function AppointmentDate(props) {
 }
 
 function AppointmentsBody(props) {
-    const { appointments, style } = props;
+    const { appointments, style, modalStyles } = props;
 
     return (
         <div className={"AppointmentsBody-container"} style={style}>
@@ -125,7 +215,10 @@ function AppointmentsBody(props) {
             return appointments.map((appointment) => {
                 const {title, startDate, begins} = appointment;
                 return (
-                    <Appointment appointment={appointment} key={appointment.id ? appointment.id : title + startDate.toString() + begins.toString()}></Appointment>
+                    <Appointment appointment={appointment} 
+                        key={appointment.id ? appointment.id : title + startDate.toString() + begins.toString()}
+                        modalStyles={modalStyles}
+                    ></Appointment>
                 )
             })
         } else {
@@ -144,7 +237,7 @@ function AppointmentsBody(props) {
 function Appointment(props) {
     const [showModal, setShowModal] = React.useState(false);
     const [message, setMessage] = React.useState("");
-    const { appointment, style } = props;
+    const { appointment, style, modalStyles } = props;
     const {title, begins} = props.appointment;
     const time = moment(begins).format("h:mm A");
 
@@ -333,7 +426,7 @@ function Label(props) {
 function AddAppointment(props) {
     const [showModal, setShowModal] = React.useState(false);
     const [message, setShowMessage] = React.useState("");
-    const { style, startDate } = props;
+    const { style, startDate, modalStyles } = props;
 
     let data = {}
 

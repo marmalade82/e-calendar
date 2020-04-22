@@ -49,14 +49,17 @@
 }
 
 .Calendar-aspectRatio {
+    flex: 8;
     @include common.screen {
         width: 100%;
         padding-top: 62%;
-        flex: 8;
         position: relative;
     }
     @include common.tablet {
-        flex: 8;
         min-height: 25vw;
+    }
+
+    @include common.mobile {
+        min-height: 60vw;
     }
 }

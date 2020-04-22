@@ -32,7 +32,7 @@
 }
 
 .Header-year {
-  font-weight: normal;
+  font-weight: bold;
   display: inline;
 }
 @media (min-width: 850px) {
@@ -77,7 +77,7 @@
 }
 
 .Months-activeTitle {
-  font-weight: normal;
+  font-weight: bold;
   color: black;
 }
 @media (min-width: 850px) {
@@ -225,18 +225,24 @@
   color: black;
 }
 
+.Calendar-aspectRatio {
+  flex: 8;
+}
 @media (min-width: 850px) {
   .Calendar-aspectRatio {
     width: 100%;
     padding-top: 62%;
-    flex: 8;
     position: relative;
   }
 }
 @media (max-width: 850px) {
   .Calendar-aspectRatio {
-    flex: 8;
     min-height: 25vw;
+  }
+}
+@media (max-width: 400px) {
+  .Calendar-aspectRatio {
+    min-height: 60vw;
   }
 }
 
@@ -315,7 +321,7 @@
 }
 
 .AppointmentDate-day {
-  font-weight: normal;
+  font-weight: bold;
 }
 @media (min-width: 850px) {
   .AppointmentDate-day {
@@ -329,7 +335,7 @@
 }
 
 .AppointmentDate-date {
-  font-weight: normal;
+  font-weight: bold;
 }
 @media (min-width: 850px) {
   .AppointmentDate-date {
@@ -465,6 +471,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
+  flex: 1;
 }
 
 .AppointmentForm-row {

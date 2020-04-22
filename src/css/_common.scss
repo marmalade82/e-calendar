@@ -78,7 +78,7 @@ $mobile: 400px;
 }
 
 @mixin header-3 {
-    font-weight: normal;
+    font-weight: bold;
     @include screen {
         font-size: 2em;
     }
@@ -125,6 +125,12 @@ $mobile: 400px;
 
 @mixin tablet {
     @media  (max-width: $tablet) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (max-width: $mobile) {
         @content;
     }
 }

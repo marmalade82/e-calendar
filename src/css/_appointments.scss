@@ -134,6 +134,7 @@
     padding: 3em 2em 3em 2em;
     @include common.grey-background(240, 1);
     @include common.content-column;
+    flex: 1;
 }
 
 .AppointmentForm-row {
