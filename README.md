@@ -14,7 +14,7 @@ Built with HTML, CSS, and JavaScript (React).
 - Appointment interface
     - Displays the appointments for a particular day (selected using the Calendar interface)
     - Allows the user to create, view, update, and delete appointments
-    - User input is validated to require Name, Start Date, and End Date
+    - User input is validated to require Name, Start Date, and Start Time
     - Each appointment can be viewed in more detail:
         - Name
         - Start and end dates/times
